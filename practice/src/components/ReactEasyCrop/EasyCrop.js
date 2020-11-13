@@ -8,16 +8,9 @@ import test from './test.jpeg';
 export default function EasyCrop(props) {
   const [crop, onCropChange] = useState({ x: 0, y: 0 });
   const [zoom, onZoomChange] = useState(1);
-  const [cropInfo, setCropInfo] = useState(null);
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     if (props.onCropComplete) props.onCropComplete({ croppedArea, croppedAreaPixels });
-  };
-
-  const handleCrop = async (e) => {
-    e.preventDefault();
-    const image = await getCroppedImg(test, cropInfo.croppedAreaPixels);
-    props.onCrop(image);
   };
 
   return (
@@ -49,7 +42,6 @@ export default function EasyCrop(props) {
           />
         </div>
       </div>
-      <button onClick={handleCrop}>Crop</button>
     </div>
   );
 }
