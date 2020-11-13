@@ -11,8 +11,7 @@ export default function EasyCrop(props) {
   const [cropInfo, setCropInfo] = useState(null);
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels);
-    setCropInfo({ croppedArea, croppedAreaPixels });
+    if (props.onCropComplete) props.onCropComplete({ croppedArea, croppedAreaPixels });
   };
 
   const handleCrop = async (e) => {
@@ -26,7 +25,7 @@ export default function EasyCrop(props) {
       {/* You can set this button to close the window */}
       <div className="crop-preview">
         <Cropper
-          image={test}
+          image={props.imgSrc}
           crop={crop}
           zoom={zoom}
           onCropChange={onCropChange}
