@@ -1,0 +1,39 @@
+.editable_profile_picture__container {
+  position: relative;
+}
+.editable_profile_picture__overlay {
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: rgba(46, 204, 113, 0.4);
+  background: linear-gradient(65deg, rgba(46, 204, 113, 0.5), rgba(243, 156, 18, 0.4));
+  opacity: 0;
+  transition: opacity 0.25s;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+  font-size: 1rem;
+  text-align: center;
+}
+.editable_profile_picture__overlay:hover {
+  opacity: 1;
+}
+.editable_profile_picture.picture {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.01s ease;
+  position: relative;
+  -webkit-box-shadow: 0 0 0 5px #fff;
+  border-radius: 50%;
+  width: 100%;
+  margin: 0 auto;
+}

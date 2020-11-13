@@ -1,0 +1,56 @@
+import React, { useState } from 'react';
+import Cropper from 'react-easy-crop';
+import Slider from '@material-ui/core/Slider';
+import './EasyCrop.css';
+import { getCroppedImg, blobToImage64 } from './utils.js';
+import test from './test.jpeg';
+
+export default function EasyCrop(props) {
+  const [crop, onCropChange] = useState({ x: 0, y: 0 });
+  const [zoom, onZoomChange] = useState(1);
+  const [cropInfo, setCropInfo] = useState(null);
+
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    console.log(croppedArea, croppedAreaPixels);
+    setCropInfo({ croppedArea, croppedAreaPixels });
+  };
+
+  const handleCrop = async (e) => {
+    e.preventDefault();
+    const image = await getCroppedImg(test, cropInfo.croppedAreaPixels);
+    props.onCrop(image);
+  };
+
+  return (
+    <div className="crop-container">
+      {/* You can set this button to close the window */}
+      <div className="crop-preview">
+        <Cropper
+          image={test}
+          crop={crop}
+          zoom={zoom}
+          onCropChange={onCropChange}
+          onCropComplete={onCropComplete}
+          onZoomChange={onZoomChange}
+          cropShape={props.cropShape || 'round'}
+          aspect={props.aspect || 1}
+          showGrid={props.showGrid || false}
+        />
+      </div>
+      <div className="crop-controls">
+        <p>Zoom</p>
+        <div className="slider-container">
+          <Slider
+            value={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            onChange={(e, zoom) => onZoomChange(zoom)}
+          />
+        </div>
+      </div>
+      <button onClick={handleCrop}>Crop</button>
+    </div>
+  );
+}
