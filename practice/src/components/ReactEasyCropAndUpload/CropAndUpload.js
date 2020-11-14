@@ -10,22 +10,13 @@ import { blobToImage64 } from '../ReactEasyCrop/utils';
 
 export default function CropAndUpload(props) {
   const [crop, setCrop] = useState(null);
-  useEffect(() => {
-    if (crop) console.log({ crop });
-  }, [crop]);
 
   const onCropComplete = (cropInfo) => {
     console.log(cropInfo);
     setCrop(cropInfo);
   };
 
-  async function onCrop(img) {
-    console.log('img', img);
-    const image64File = await blobToImage64(img);
-    // const ext = extractImageFileExtensionFromBase64(image64File);
-    downloadBase64File(image64File, 'myfile');
-  }
-  async function onCrop2(e) {
+  async function onCrop(e) {
     e.preventDefault();
     const image = await getCroppedImg(props.imgSrc || defaultImg, crop.croppedAreaPixels);
     const image64File = await blobToImage64(image);
@@ -35,7 +26,6 @@ export default function CropAndUpload(props) {
 
   const handleCrop = (info) => {
     setCrop(info);
-    console.log('hsandled crop');
   };
 
   return (
@@ -47,7 +37,7 @@ export default function CropAndUpload(props) {
         onCropComplete={onCropComplete}
         handleCrop={handleCrop}
       ></EasyCrop>
-      <button onClick={onCrop2}>Crop2</button>
+      <button onClick={onCrop}>Crop2</button>
     </form>
   );
 }

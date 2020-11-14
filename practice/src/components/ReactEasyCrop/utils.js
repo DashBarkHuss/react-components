@@ -42,10 +42,10 @@ export const getCroppedImg = async (imageSrc, crop) => {
 
   /* setting canvas width & height allows us to 
     resize from the original image resolution */
-  canvas.width = crop.width;
-  canvas.height = crop.height;
+  canvas.width = 300;
+  canvas.height = 300;
   const ext = extractImageFileExtensionFromBase64(imageSrc);
-  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, canvas.width, canvas.height);
 
   return new Promise((resolve) => {
     canvas.toBlob((blob) => {
