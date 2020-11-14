@@ -5,30 +5,62 @@ import ImgDropAndCrop from './components/DragAndCropAndUpload/ImgDropAndCrop';
 import CropAndUpload from './components/ReactEasyCropAndUpload/CropAndUpload';
 import InputProfilePicture from './components/InputProfilePicture/InputProfilePicture.js';
 import React, { useEffect, useState } from 'react';
-import { blobToImage64 } from './components/ReactEasyCrop/utils';
+import { blobToImage64, base64StringtoFile } from './components/ReactEasyCrop/utils';
 import { replace } from 'sinon';
+
+// this would be in a session or something
+const userId = '123';
 
 function App() {
   const [cropVisible, setCropVisible] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
+
+  //fetch this
+  const [profPicFileName, setProfilePicFileName] = useState(null);
+
   const closeCrop = () => {
     setCropVisible(false);
   };
+
   useEffect(() => {
-    if (!profilePic) {
-      fetch(`http://localhost:4000/image/b493d5a8-975c-4a07-be0b-e3d4914dbaef.png`)
+    if (!profPicFileName) {
+      //finish the users profile info
+
+      fetch(`http://localhost:4000/user/${userId}`)
+        .then((res) => {
+          if (res.status === 500) throw res.text();
+          return res.json();
+        })
+        .then((json) => {
+          setProfilePicFileName(json.profilePicture);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
+  useEffect(() => {
+    if (profPicFileName) {
+      //fetch profile picture
+
+      fetch(`http://localhost:4000/image/${profPicFileName}`)
         .then((res) => res.blob())
         .then((blob) => {
           setProfilePic(URL.createObjectURL(blob));
           console.log(blob);
         });
     }
-  });
+  }, [profPicFileName]);
+  const onUploadSuccess = (img) => {
+    URL.createObjectURL(img);
+    setProfilePic(URL.createObjectURL(img));
+  };
   useEffect(() => {
     if (imgSrc) setCropVisible(true);
   }, [imgSrc]);
 
+  // is this  called uploading?? we are just uploading to the client not the server
   const handleUploaded = (img) => {
     setImgSrc(img);
   };
@@ -44,7 +76,11 @@ function App() {
       {cropVisible && (
         <div style={{ margin: '10%' }}>
           <div>
-            <CropAndUpload onClose={closeCrop} imgSrc={imgSrc}></CropAndUpload>
+            <CropAndUpload
+              onSuccess={onUploadSuccess}
+              onClose={closeCrop}
+              imgSrc={imgSrc}
+            ></CropAndUpload>
           </div>
         </div>
       )}
