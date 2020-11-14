@@ -20,7 +20,7 @@ export default function InputProfilePicture(props) {
         accept="image/x-png,image/gif,image/jpeg"
         onChange={uploadProfilePic}
       />
-      <EditableProfilePicture></EditableProfilePicture>
+      <EditableProfilePicture profilePic={props.profilePic}></EditableProfilePicture>
     </label>
   );
 }
