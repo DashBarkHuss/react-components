@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import './EasyCrop.css';
-import { getCroppedImg, blobToImage64 } from './utils.js';
-import test from './test.jpeg';
 
 export default function EasyCrop(props) {
   const [crop, onCropChange] = useState({ x: 0, y: 0 });

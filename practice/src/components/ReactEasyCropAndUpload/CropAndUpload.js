@@ -5,10 +5,6 @@ import EasyCrop from '../ReactEasyCrop/EasyCrop';
 import CloseButton from './CloseButton/CloseButton';
 import { getCroppedImg } from '../ReactEasyCrop/utils';
 
-import { downloadBase64File } from '../DragAndCropAndUpload/utils';
-import { blobToImage64 } from '../ReactEasyCrop/utils';
-import { set } from 'mongoose';
-
 export default function CropAndUpload(props) {
   const [crop, setCrop] = useState(null);
 
@@ -41,15 +37,11 @@ export default function CropAndUpload(props) {
       })
       .catch(console.log);
   };
-  async function onCrop(e) {
+  async function onCropAndSave(e) {
     e.preventDefault();
     const image = await croppedImage();
     postImage(image);
     props.onClose();
-    //if you want to download
-    // const image64File = await blobToImage64(image);
-    // const ext = extractImageFileExtensionFromBase64(image64File);
-    // downloadBase64File(image64File, 'myfile');
   }
 
   const handleCrop = (info) => {
@@ -65,7 +57,7 @@ export default function CropAndUpload(props) {
         onCropComplete={onCropComplete}
         handleCrop={handleCrop}
       ></EasyCrop>
-      <button onClick={onCrop}>Crop and Save</button>
+      <button onClick={onCropAndSave}>Crop and Save</button>
     </form>
   );
 }
