@@ -1,8 +1,5 @@
-/* only works on className="profile_picture container"*/
-.profile_picture.container {
-  width: 25%;
-}
-.profile_picture .picture {
+img.profile_picture {
+  display: flex;
   background-size: cover;
   position: relative;
   -webkit-box-shadow: 0 0 0 5px #fff;

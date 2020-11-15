@@ -1,4 +1,5 @@
 import React from 'react';
+import EditableProfilePicture from '../../EditableProfilePicture/EditableProfilePicture.js';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture.js';
 import './ProfileInfo.css';
 
@@ -17,7 +18,7 @@ export default function ProfileInfo(props) {
     <div className="info">
       <div className="container flex">
         <div className="profile_picture container">
-          <ProfilePicture profilePic={props.profilePic}></ProfilePicture>
+          <EditableProfilePicture profilePic={props.profilePic}></EditableProfilePicture>
         </div>
         <div className="container name">
           <div className="wishlist_name">{props.firstName}'s Wishlist</div>

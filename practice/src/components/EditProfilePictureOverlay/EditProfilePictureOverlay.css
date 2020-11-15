@@ -1,10 +1,5 @@
 .edit_profile_picture__overlay {
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  background-color: rgba(46, 204, 113, 0.4);
-  background: linear-gradient(65deg, rgba(46, 204, 113, 0.5), rgba(243, 156, 18, 0.4));
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.25s;
   bottom: 0;
   left: 0;
@@ -16,8 +11,16 @@
   align-items: center;
   z-index: 1;
   position: absolute;
-  font-size: 1rem;
   text-align: center;
+}
+/* theming */
+.edit_profile_picture__overlay {
+  background-color: rgba(46, 204, 113, 0.4);
+  background: linear-gradient(65deg, rgba(46, 204, 113, 0.4), rgba(243, 156, 18, 0.4));
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1rem;
 }
 .edit_profile_picture__overlay:hover {
   opacity: 1;

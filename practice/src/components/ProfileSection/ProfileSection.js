@@ -2,6 +2,7 @@ import React from 'react';
 import './ProfileSection.css';
 import CoverImage from './CoverImage/CoverImage.js';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
+import EditableProfileInfo from './ProfileInfo/EditableProfileInfo';
 
 /**
  * Renders a <ProfileSection /> component
@@ -16,12 +17,12 @@ function ProfileSection(props) {
   return (
     <div className="profile_section">
       <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage>
-      <ProfileInfo
+      <EditableProfileInfo
         firstName={props.firstName}
         displayName={props.displayName}
         profileMessage={props.profileMessage}
         profilePic={props.profilePic}
-      ></ProfileInfo>
+      ></EditableProfileInfo>
     </div>
   );
 }
