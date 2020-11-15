@@ -17,7 +17,7 @@ export default function ProfileInfo(props) {
   return (
     <div className="info">
       <div className="container flex">
-        <div className="profile_picture container">
+        <div className="profile_picture__container">
           <EditableProfilePicture profilePic={props.profilePic}></EditableProfilePicture>
         </div>
         <div className="container name">

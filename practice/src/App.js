@@ -8,7 +8,6 @@ import coverPicUrl from './banner.png';
 import profilePic from './profilePic.jpeg';
 import EditableProfilePicture from './components/EditableProfilePicture/EditableProfilePicture';
 import EditProfilePictureOverlay from './components/EditProfilePictureOverlay/EditProfilePictureOverlay';
-import CircularOverlay from './components/CircularOverlay/CircularOverlay.js';
 
 // this would be in a session or something
 const userId = '123';
@@ -22,7 +21,7 @@ const user = {
 function App() {
   return (
     <div className="App">
-      {/* <div style={{ backgroundColor: 'lightgrey' }}>
+      <div style={{ backgroundColor: 'lightgrey' }}>
         <ProfileSection
           coverPicUrl={user.coverPicUrl}
           profilePic={user.profilePic}
@@ -30,17 +29,8 @@ function App() {
           profileMessage={user.profileMessage}
           firstName={user.firstName}
         ></ProfileSection>
-      </div> */}
-      <div style={{ width: '30%', position: 'relative', margin: '2%' }}>
-        <EditProfilePictureOverlay></EditProfilePictureOverlay>
-        <ProfilePicture></ProfilePicture>
       </div>
-      <div className="CircularOverlay" style={{ width: '30%', position: 'relative' }}>
-        <CircularOverlay></CircularOverlay>
-      </div>
-      {/* <div style={{ width: '30%', position: 'relative' }}>
-        <EditableProfilePicture></EditableProfilePicture>
-      </div> */}
+
       {/* <Profile userId={userId}></Profile> */}
     </div>
   );
