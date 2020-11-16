@@ -3,6 +3,7 @@ import './ProfileSection.css';
 import CoverImage from './CoverImage/CoverImage.js';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import EditableProfileInfo from './ProfileInfo/EditableProfileInfo';
+import EditableCoverImage from './EditableCoverImage/EditableCoverImage';
 
 /**
  * Renders a <ProfileSection /> component
@@ -16,7 +17,8 @@ import EditableProfileInfo from './ProfileInfo/EditableProfileInfo';
 function ProfileSection(props) {
   return (
     <div className="profile_section">
-      <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage>
+      <EditableCoverImage coverPicUrl={props.coverPicUrl}></EditableCoverImage>
+      {/* <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage> */}
       <EditableProfileInfo
         firstName={props.firstName}
         displayName={props.displayName}

@@ -14,7 +14,7 @@
   width: 100%;
   background-size: cover;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   background: #000;
 }
 @media only screen and (min-width: 600px) {

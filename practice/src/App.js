@@ -8,6 +8,7 @@ import coverPicUrl from './banner.png';
 import profilePic from './profilePic.jpeg';
 import EditableProfilePicture from './components/EditableProfilePicture/EditableProfilePicture';
 import EditProfilePictureOverlay from './components/EditProfilePictureOverlay/EditProfilePictureOverlay';
+import EditableCoverImage from './components/ProfileSection/EditableCoverImage/EditableCoverImage';
 
 // this would be in a session or something
 const userId = '123';
@@ -15,7 +16,8 @@ const user = {
   coverPicUrl: coverPicUrl,
   profilePic: profilePic,
   displayName: 'Dashie Bark Huss',
-  profileMessage: 'Love You',
+  // find out limit
+  profileMessage: 'Thanks for coming to my page! I love gifts.',
   firstName: 'dashie',
 };
 function App() {
