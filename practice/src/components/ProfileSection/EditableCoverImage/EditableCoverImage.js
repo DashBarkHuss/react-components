@@ -10,18 +10,20 @@ const color = require('sc-color');
 const useStyles = makeStyles((theme) => {
   const primary = theme.palette.primary.main;
 
-  const bgColor = `radial-gradient(${color(primary).hue('-10').hex6()} 40%, ${color(primary)
-    .hue('+10')
-    .hex6()} 100%)`;
-  const bgHoverColor = `radial-gradient(${color(primary).hue('+0').hex6()} 40%, ${color(primary)
+  const bgColor = `linear-gradient(to left, ${color(primary).hue('-6').hex6()} 0%, ${color(primary)
+    .hue('+6')
+    .hex6()} 51%, ${color(primary).hue('-6').hex6()} 100%)`;
+  const bgHoverColor = `linear-gradient(${color(primary).hue('+0').hex6()} 40%, ${color(primary)
     .hue('+0')
     .hex6()} 100%)`;
   return {
     root: {
       backgroundImage: bgColor,
+      backgroundSize: `200% 100%`,
+      transition: '0.01s',
       color: '#fff',
       '&:hover': {
-        backgroundImage: bgHoverColor,
+        backgroundPosition: 'right center',
       },
     },
   };
@@ -31,7 +33,12 @@ function UpdateCoverPhotoButton() {
   const classes = useStyles();
 
   return (
-    <IconButton className={clsx(classes.root)} size="medium" color="primary">
+    <IconButton
+      className={clsx(classes.root)}
+      ariaLabel="Update Cover Image"
+      size="medium"
+      color="primary"
+    >
       <PhotoSizeSelectActualTwoToneIcon />
     </IconButton>
   );
