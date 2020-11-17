@@ -1,0 +1,11 @@
+.button.style2 {
+  color: #fff;
+  background-color: #02bff2;
+  font-weight: bolder;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.button.style2:hover {
+  background-color: #03b0e0;
+}

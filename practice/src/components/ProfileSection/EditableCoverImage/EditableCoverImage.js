@@ -9,16 +9,16 @@ export default function EditableCoverImage(props) {
   return (
     <div className="editable-cover-image">
       <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage>
-      <div className="edit-image-button__container">
+      {/* <div className="edit-image-button__container">
         <Button
-          variant="contained"
+          variant="outlined"
           size="small"
-          color="secondary"
+          color="primary"
           startIcon={<PhotoSizeSelectActualTwoToneIcon />}
         >
-          Edit Cover Photo
+          Edit Cover
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }

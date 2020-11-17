@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import defaultImg from './wedding_dress_dashie.jpg';
 import './CropAndUpload.css';
 import EasyCrop from '../ReactEasyCrop/EasyCrop';
-import CloseButton from './CloseButton/CloseButton';
+import CloseButton from '../CloseButton/CloseButton';
 import { getCroppedImg } from '../ReactEasyCrop/utils';
 
 export default function CropAndUpload(props) {

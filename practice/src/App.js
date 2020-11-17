@@ -3,38 +3,57 @@ import React, { useEffect, useState } from 'react';
 import Profile from './components/Profile/Profile';
 import ProfilePicture from './components/ProfilePicture/ProfilePicture';
 import ProfileSection from './components/ProfileSection/ProfileSection';
-import coverPicUrl from './banner.png';
-// import coverPicUrl from './banner_pic.png';
+// import coverPicUrl from './banner.png';
+import coverPicUrl from './banner_pic.png';
 import profilePic from './profilePic.jpeg';
-import EditableProfilePicture from './components/EditableProfilePicture/EditableProfilePicture';
-import EditProfilePictureOverlay from './components/EditProfilePictureOverlay/EditProfilePictureOverlay';
-import EditableCoverImage from './components/ProfileSection/EditableCoverImage/EditableCoverImage';
+import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import ButtonStyled from './components/ButtonStyled/ButtonStyled';
+import ButtonStyled2 from './components/ButtonStyled/ButtonStyled2';
+import { Button } from '@material-ui/core';
 
 // this would be in a session or something
 const userId = '123';
+
 const user = {
   coverPicUrl: coverPicUrl,
   profilePic: profilePic,
-  displayName: 'Dashie Bark Huss',
+  displayName: '@dashie',
   // find out limit
-  profileMessage: 'Thanks for coming to my page! I love gifts.',
-  firstName: 'dashie',
+  profileMessage: 'Thanks for coming to my page!',
+  firstName: 'Dashie',
 };
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ['Nunito', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'].join(','),
+  },
+  palette: {
+    primary: {
+      main: '#02bff2',
+    },
+    secondary: {
+      main: '#aaa',
+    },
+  },
+  shape: {
+    borderRadius: 0,
+  },
+});
 function App() {
   return (
-    <div className="App">
-      <div style={{ backgroundColor: 'lightgrey' }}>
-        <ProfileSection
-          coverPicUrl={user.coverPicUrl}
-          profilePic={user.profilePic}
-          displayName={user.displayName}
-          profileMessage={user.profileMessage}
-          firstName={user.firstName}
-        ></ProfileSection>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <div style={{ backgroundColor: '#fafafa' }}>
+          <ProfileSection
+            coverPicUrl={user.coverPicUrl}
+            profilePic={user.profilePic}
+            displayName={user.displayName}
+            profileMessage={user.profileMessage}
+            firstName={user.firstName}
+          ></ProfileSection>
+        </div>
+        {/* <Profile userId={userId}></Profile> */}
       </div>
-
-      {/* <Profile userId={userId}></Profile> */}
-    </div>
+    </ThemeProvider>
   );
 }
 
