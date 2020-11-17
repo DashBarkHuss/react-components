@@ -1,10 +1,9 @@
 /* ProfileSection.js  */
 .info {
-  position: absolute;
+  position: relative;
   border-bottom: 1px solid rgb(224, 224, 224);
   padding: 4%;
   padding-top: 20vw;
-  z-index: 100;
 }
 .wishlist_name {
   font-size: 1.2rem;

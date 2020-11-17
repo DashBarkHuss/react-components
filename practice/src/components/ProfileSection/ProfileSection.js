@@ -17,21 +17,19 @@ import Button from '@material-ui/core/Button';
 function ProfileSection(props) {
   return (
     <div className="profile_section">
+      <EditableCoverImage coverPicUrl={props.coverPicUrl}></EditableCoverImage>
       <EditableProfileInfo
         firstName={props.firstName}
         displayName={props.displayName}
         profileMessage={props.profileMessage}
         profilePic={props.profilePic}
       ></EditableProfileInfo>
-      <EditableCoverImage coverPicUrl={props.coverPicUrl}></EditableCoverImage>
 
       {/* <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage> */}
-      <div style={{ width: '100%' }}>
-        <div className="edit_profile_button__container">
-          <Button style={{ zIndex: 100 }} variant="outlined">
-            hi
-          </Button>
-        </div>
+      <div className="edit_profile_button__container">
+        <Button color="primary" variant="outlined">
+          Edit Profile
+        </Button>
       </div>
     </div>
   );

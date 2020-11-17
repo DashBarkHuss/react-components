@@ -2,3 +2,24 @@
 .profile_section {
   position: relative;
 }
+
+.edit_profile_button__container {
+  position: absolute;
+  top: 30.5vw;
+  right: 1vw;
+}
+@media only screen and (min-width: 600px) {
+  .edit_profile_button__container {
+    position: absolute;
+    top: 30.5vw;
+  }
+}
+
+element.style {
+}
+@media only screen and (min-width: 960px) {
+  .edit_profile_button__container {
+    position: absolute;
+    top: 25.5vw;
+  }
+}

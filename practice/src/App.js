@@ -35,7 +35,7 @@ const theme = createMuiTheme({
     },
   },
   shape: {
-    borderRadius: 0,
+    borderRadius: 50,
   },
 });
 function App() {
@@ -53,6 +53,7 @@ function App() {
         </div>
         {/* <Profile userId={userId}></Profile> */}
       </div>
+      <div style={{ borderColor: 'red' }}></div>
     </ThemeProvider>
   );
 }
