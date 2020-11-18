@@ -1,4 +1,4 @@
-import EditableProfilePicture from '../EditableProfilePicture/EditableProfilePicture';
+import EditableProfilePicture from '../EditableProfilePicture2/EditableProfilePicture';
 import CropAndUpload from '../ReactEasyCropAndUpload/CropAndUpload';
 import React, { useEffect, useState } from 'react';
 // this would be in a session or something

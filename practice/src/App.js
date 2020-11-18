@@ -38,6 +38,13 @@ const theme = createMuiTheme({
     borderRadius: 50,
   },
 });
+theme.overrides = {
+  MuiButton: {
+    root: {
+      border: '5px solid red',
+    },
+  },
+};
 function App() {
   return (
     <ThemeProvider theme={theme}>
