@@ -19,11 +19,42 @@ function ProfileSection(props) {
   const [handle, setHandle] = useState(null);
   const [message, setMessage] = useState(null);
 
+  // fetch post image
+  const fetchPostImage = (image, fileName, route) => {
+    var fd = new FormData();
+    fd.append(fileName, image);
+    return fetch(route, {
+      method: 'POST',
+      body: fd,
+      mode: 'cors',
+    });
+  };
+  // fetch post json
+  const fetchPostJson = () => {};
+
   // route post /alias/update
   // profilePicture
   // handle
 
-  const handleUpdateProfilePicture = () => {};
+  const handleUpdateProfilePicture = (image) => {
+    //does this return a promise?
+    fetchPostImage(image, 'image', 'http://localhost:4000/image')
+      .then(async (response) => {
+        if (response.status === 500) {
+          let responseText = await response.text();
+          throw new Error(responseText);
+        }
+        return response.text();
+      })
+      .then((img) => {
+        setProfilePicture(image);
+        console.log(img);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  };
   const handleCheckHandleAvailability = () => {};
   const handleUpdateHandle = () => {};
 
@@ -43,6 +74,7 @@ function ProfileSection(props) {
         displayName={props.displayName}
         profileMessage={props.profileMessage}
         profilePic={props.profilePic}
+        handleUpdateProfilePicture={handleUpdateProfilePicture}
       ></EditableProfileInfo>
 
       {/* <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage> */}

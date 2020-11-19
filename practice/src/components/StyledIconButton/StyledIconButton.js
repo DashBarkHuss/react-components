@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => {
  * @param  props
  * @param  props.ariaLabel
  * @param  props.size
+ * @param  props.onClick
  * @param  props.children an icon passed in as a child element
  * @param  props.profileMessage
  */
@@ -39,9 +40,10 @@ export default function StyledIconButton(props) {
   return (
     <IconButton
       className={clsx(classes.root)}
-      ariaLabel={props.ariaLabel || ''}
+      aria-label={props.ariaLabel || ''}
       size={props.size || 'medium'}
       color="primary"
+      onClick={props.onClick}
     >
       {clone}
     </IconButton>

@@ -22,13 +22,17 @@ const userLoggedIn = true;
  * @param  props.displayName
  * @param  props.profilePic
  * @param  props.profileMessage
+ * @param  props.handleUpdateProfilePicture
  */
 export default function EditableProfileInfo(props) {
   return (
     <div className="info">
       <div className="container flex">
         <div className="profile_picture__container">
-          <EditableProfilePicture profilePic={props.profilePic}></EditableProfilePicture>
+          <EditableProfilePicture
+            handleUpdateProfilePicture={props.handleUpdateProfilePicture}
+            profilePic={props.profilePic}
+          ></EditableProfilePicture>
         </div>
         <div className="container name">
           <div className="wishlist_name">{props.firstName}'s Wishlist</div>

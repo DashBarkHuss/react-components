@@ -1,15 +1,10 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
-import Profile from './components/Profile/Profile';
-import ProfilePicture from './components/ProfilePicture/ProfilePicture';
+
 import ProfileSection from './components/ProfileSection/ProfileSection';
 // import coverPicUrl from './banner.png';
 import coverPicUrl from './banner_pic.png';
 import profilePic from './profilePic.jpeg';
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import ButtonStyled from './components/ButtonStyled/ButtonStyled';
-import ButtonStyled2 from './components/ButtonStyled/ButtonStyled2';
-import { Button } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 // this would be in a session or something
 const userId = '123';
