@@ -5,6 +5,8 @@ import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import StyledIconButton from '../StyledIconButton/StyledIconButton';
 import ProfileInputOverlay from '../ProfileInputOverlay/ProfileInputOverlay';
+import CropAndUpload from '../ReactEasyCropAndUpload/CropAndUpload';
+import Modal from '@material-ui/core/Modal';
 
 /**
  * Renders a <StyledIconButton /> component
@@ -27,6 +29,7 @@ export default function EditableProfilePicture(props) {
               onChange={(e) => {
                 const image = e.target.files[0];
                 if (image) props.handleUpdateProfilePicture(image);
+                // props.handleUpdateProfilePicture(image);
               }}
             />
             <StyledIconButton
@@ -36,6 +39,15 @@ export default function EditableProfilePicture(props) {
             >
               <PhotoCameraIcon></PhotoCameraIcon>
             </StyledIconButton>
+            <Modal
+              open={true}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <div style={{ width: '400px', paddingTop: '100px', margin: 'auto' }}>
+                <CropAndUpload></CropAndUpload>
+              </div>
+            </Modal>
           </div>
         </label>
       </div>

@@ -53,7 +53,6 @@ function App() {
             firstName={user.firstName}
           ></ProfileSection>
         </div>
-        {/* <Profile userId={userId}></Profile> */}
       </div>
       <div style={{ borderColor: 'red' }}></div>
     </ThemeProvider>
