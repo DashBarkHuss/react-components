@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfileSection.css';
 import EditableProfileInfo from './EditbableProfileInfo/EditableProfileInfo.js';
 import EditableCoverImage from './EditableCoverImage/EditableCoverImage';
 import Button from '@material-ui/core/Button';
+//fake data for now
+import coverPicUrl from './banner_pic.png';
+import profilePic from './profilePic.jpeg';
+
+//change these to match your backend routes
+const postImageRoute = 'http://localhost:4000/image';
+
+//fake data for now
+const user = {
+  coverPicUrl: coverPicUrl,
+  profilePic: profilePic,
+  displayName: '@dashie',
+  // find out limit
+  profileMessage: 'Thanks for coming to my page!',
+  firstName: 'Dashie',
+};
 /**
  * Renders a <ProfileSection /> component
  * @param  props
@@ -18,6 +34,15 @@ function ProfileSection(props) {
   const [wishlistName, setWishlistName] = useState(null);
   const [handle, setHandle] = useState(null);
   const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    // all of these would be set through a get request in real life using fetch
+    setProfilePicture(user.profilePic);
+    setCoverImage(user.coverPicUrl);
+    setWishlistName(user.firstName);
+    setHandle(user.displayName);
+    setMessage(user.profileMessage);
+  }, []);
 
   // fetch post image
   const fetchPostImage = (image, fileName, route) => {
@@ -37,8 +62,7 @@ function ProfileSection(props) {
   // handle
 
   const handleUpdateProfilePicture = (image) => {
-    //does this return a promise?
-    fetchPostImage(image, 'image', 'http://localhost:4000/image')
+    fetchPostImage(image, 'image', postImageRoute)
       .then(async (response) => {
         if (response.status === 500) {
           let responseText = await response.text();
@@ -47,7 +71,7 @@ function ProfileSection(props) {
         return response.text();
       })
       .then((img) => {
-        setProfilePicture(image);
+        setProfilePicture(URL.createObjectURL(image));
         console.log(img);
       })
       .catch((err) => {
@@ -68,12 +92,12 @@ function ProfileSection(props) {
 
   return (
     <div className="profile_section">
-      <EditableCoverImage coverPicUrl={props.coverPicUrl}></EditableCoverImage>
+      <EditableCoverImage coverPicUrl={coverImage}></EditableCoverImage>
       <EditableProfileInfo
-        firstName={props.firstName}
-        displayName={props.displayName}
-        profileMessage={props.profileMessage}
-        profilePic={props.profilePic}
+        firstName={wishlistName}
+        displayName={handle}
+        profileMessage={message}
+        profilePic={profilePicture}
         handleUpdateProfilePicture={handleUpdateProfilePicture}
       ></EditableProfileInfo>
 
