@@ -9,6 +9,9 @@ import { getCroppedImg } from '../ReactEasyCrop/utils';
  * @param  props
  * @param  props.imgSrc must be a data URl
  * @param  props.onCroppedImageCreated
+ * @param  props.aspect ex 2 or 2/1
+ * @param  props.cropShape
+ * @param  props.finalImageDimension ex- {width: 300, height: 300}
  **/
 export default function Crop(props) {
   const [crop, setCrop] = useState(null);
@@ -18,7 +21,11 @@ export default function Crop(props) {
   };
 
   const croppedImage = async () => {
-    const image = await getCroppedImg(props.imgSrc, crop.croppedAreaPixels);
+    const image = await getCroppedImg(
+      props.imgSrc,
+      crop.croppedAreaPixels,
+      props.finalImageDimensions
+    );
     return image;
   };
 
@@ -41,6 +48,9 @@ export default function Crop(props) {
         imgSrc={props.imgSrc || ''}
         onCropComplete={onCropComplete}
         handleCrop={handleCrop}
+        cropShape={props.cropShape}
+        aspect={props.aspect}
+        finalImageDimensions={props.finalImageDimensions}
       ></EasyCrop>
       <button onClick={onCropAndSave}>Crop and Save</button>
     </form>

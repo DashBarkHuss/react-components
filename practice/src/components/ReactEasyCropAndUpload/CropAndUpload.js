@@ -5,6 +5,12 @@ import EasyCrop from '../ReactEasyCrop/EasyCrop';
 import CloseButton from '../CloseButton/CloseButton';
 import { getCroppedImg } from '../ReactEasyCrop/utils';
 
+/* Renders a <CropAndUpload /> component
+ * @param  props
+ * @param  props.handleUpdateProfilePicture
+ * @param  props.aspect ex 2 or 2/1
+ * @param  props.cropShape
+ **/
 export default function CropAndUpload(props) {
   const [crop, setCrop] = useState(null);
 
@@ -53,6 +59,8 @@ export default function CropAndUpload(props) {
       <CloseButton onClose={props.onClose}></CloseButton>
       <p className="crop-label">Profile Picture</p>
       <EasyCrop
+        aspect={props.aspect}
+        cropShape={props.cropShape}
         imgSrc={props.imgSrc || defaultImg}
         onCropComplete={onCropComplete}
         handleCrop={handleCrop}

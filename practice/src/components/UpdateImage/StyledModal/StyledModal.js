@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+const classes = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
 
 /**
- * Renders a <Modal /> component
+ * Renders a <StyledModal /> component
  * @param  props
  * @param  props.open
  * @param  props.onClose
+ * @param  props.ariaLabel
  **/
 export default function StyledModal(props) {
   return (
@@ -13,7 +28,7 @@ export default function StyledModal(props) {
       open={props.open}
       style={{ display: 'flex' }}
       onClose={props.onClose}
-      aria-label="crop profile picture"
+      aria-label={props.ariaLabel || 'modal'}
     >
       <div
         style={{
@@ -26,6 +41,9 @@ export default function StyledModal(props) {
           textAlign: 'center',
         }}
       >
+        <IconButton aria-label="close" className={classes.closeButton} onClick={props.onClose}>
+          <CloseIcon />
+        </IconButton>
         {props.children}
       </div>
     </Modal>

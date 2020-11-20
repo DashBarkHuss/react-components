@@ -45,14 +45,29 @@ function ProfileSection(props) {
   }, []);
 
   // fetch post image
-  const fetchPostImage = (image, fileName, route) => {
+  const fetchPostImage = (image, fileName, route, setStateCallback) => {
     var fd = new FormData();
     fd.append(fileName, image);
-    return fetch(route, {
+    fetch(route, {
       method: 'POST',
       body: fd,
       mode: 'cors',
-    });
+    })
+      .then(async (response) => {
+        if (response.status === 500) {
+          let responseText = await response.text();
+          throw new Error(responseText);
+        }
+        return response.text();
+      })
+      .then((img) => {
+        setStateCallback(URL.createObjectURL(image));
+        console.log(img);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
   };
   // fetch post json
   const fetchPostJson = () => {};
@@ -62,22 +77,7 @@ function ProfileSection(props) {
   // handle
 
   const handleUpdateProfilePicture = (image) => {
-    fetchPostImage(image, 'image', postImageRoute)
-      .then(async (response) => {
-        if (response.status === 500) {
-          let responseText = await response.text();
-          throw new Error(responseText);
-        }
-        return response.text();
-      })
-      .then((img) => {
-        setProfilePicture(URL.createObjectURL(image));
-        console.log(img);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
+    fetchPostImage(image, 'image', postImageRoute, setProfilePicture);
   };
   const handleCheckHandleAvailability = () => {};
   const handleUpdateHandle = () => {};
@@ -86,13 +86,18 @@ function ProfileSection(props) {
   // coverImage
   // message
   // wishlistName
-  const handleUpdateCoverImage = () => {};
+  const handleUpdateCoverImage = (image) => {
+    fetchPostImage(image, 'image', postImageRoute, setCoverImage);
+  };
   const handleUpdateMessage = () => {};
   const handleUpdateWishlistName = () => {};
 
   return (
     <div className="profile_section">
-      <EditableCoverImage coverPicUrl={coverImage}></EditableCoverImage>
+      <EditableCoverImage
+        coverPicUrl={coverImage}
+        handleUpdateCoverImage={handleUpdateCoverImage}
+      ></EditableCoverImage>
       <EditableProfileInfo
         firstName={wishlistName}
         displayName={handle}

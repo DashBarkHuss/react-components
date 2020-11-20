@@ -7,7 +7,8 @@ import './EasyCrop.css';
  * Renders a <EasyCrop /> component
  * @param  props
  * @param  props.handleUpdateProfilePicture
- * @param  props.cropRatio obj
+ * @param  props.aspect ex 2 or 2/1 default 1
+ * @param  props.cropShape default 'round'
  **/
 
 export default function EasyCrop(props) {

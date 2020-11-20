@@ -1,29 +1,17 @@
 import React, { useState } from 'react';
-import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import StyledIconButton from '../StyledIconButton/StyledIconButton';
-import StyledModal from './Modal/Modal';
+import StyledModal from './StyledModal/StyledModal';
 import Crop from '../Crop/Crop';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-
-const classes = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-});
 
 /**
- * Renders a <InputProfilePic /> component
+ * Renders a <UpdateImage /> component
  * @param  props
- * @param  props.handleUpdateProfilePicture
- * @param  props.cropRatio obj
+ * @param  props.handleUpdateImage
+ * @param  props.aspect ex 2 or 2/1
+ * @param  props.cropShape
+ * @param  props.size
+ * @param  props.children
+ * @param  props.finalImageDimensions ex- {width: 300, height: 300}
  **/
 export default function InputProfilePic(props) {
   const fileInput = React.useRef();
@@ -35,8 +23,9 @@ export default function InputProfilePic(props) {
   };
 
   return (
-    <label>
-      <div>
+    <>
+      <label>
+        {/* Button */}
         <input
           ref={fileInput}
           type="file"
@@ -57,22 +46,26 @@ export default function InputProfilePic(props) {
         />
         <StyledIconButton
           onClick={() => fileInput.current.click()}
-          size="small"
+          size={props.size || 'small'}
           ariaLabel="update profile picture"
         >
-          <PhotoCameraIcon></PhotoCameraIcon>
+          {props.children}
         </StyledIconButton>
-        <StyledModal open={modalOpen} onClose={handleModalClose}>
-          <IconButton aria-label="close" className={classes.closeButton} onClick={props.onClose}>
-            <CloseIcon />
-          </IconButton>
-          <Crop
-            onClose={handleModalClose}
-            onCroppedImageCreated={props.handleUpdateProfilePicture}
-            imgSrc={newPictureSrc}
-          ></Crop>
-        </StyledModal>
-      </div>
-    </label>
+      </label>
+      {/* Button end*/}
+
+      {/* Modal start */}
+      <StyledModal open={modalOpen} ariaLabel="crop modal" onClose={handleModalClose}>
+        <Crop
+          onClose={handleModalClose}
+          onCroppedImageCreated={props.handleUpdateImage}
+          imgSrc={newPictureSrc}
+          cropShape={props.cropShape}
+          aspect={props.aspect}
+          finalImageDimensions={props.finalImageDimensions}
+        ></Crop>
+      </StyledModal>
+      {/* Modal end */}
+    </>
   );
 }

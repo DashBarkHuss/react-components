@@ -1,5 +1,6 @@
 .editable-cover-image {
   position: absolute;
+  width: 100%;
 }
 .edit-image-button__container {
   position: absolute;
