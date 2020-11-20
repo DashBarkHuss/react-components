@@ -4,7 +4,7 @@ import EditableProfileInfo from './EditbableProfileInfo/EditableProfileInfo.js';
 import EditableCoverImage from './EditableCoverImage/EditableCoverImage';
 import Button from '@material-ui/core/Button';
 //fake data for now
-import coverPicUrl from './banner_pic.png';
+import coverPicUrl from './banner_pic.jpg';
 import profilePic from './profilePic.jpeg';
 
 //change these to match your backend routes

@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import StyledIconButton from '../StyledIconButton/StyledIconButton';
-import CropModal from './CropModal/CropModal';
+import StyledModal from './Modal/Modal';
+import Crop from '../Crop/Crop';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+const classes = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
 
 /**
  * Renders a <InputProfilePic /> component
  * @param  props
  * @param  props.handleUpdateProfilePicture
+ * @param  props.cropRatio obj
  **/
 export default function InputProfilePic(props) {
   const fileInput = React.useRef();
@@ -45,12 +62,16 @@ export default function InputProfilePic(props) {
         >
           <PhotoCameraIcon></PhotoCameraIcon>
         </StyledIconButton>
-        <CropModal
-          imgSrc={newPictureSrc}
-          handleUpdateProfilePicture={props.handleUpdateProfilePicture}
-          open={modalOpen}
-          onClose={handleModalClose}
-        ></CropModal>
+        <StyledModal open={modalOpen} onClose={handleModalClose}>
+          <IconButton aria-label="close" className={classes.closeButton} onClick={props.onClose}>
+            <CloseIcon />
+          </IconButton>
+          <Crop
+            onClose={handleModalClose}
+            onCroppedImageCreated={props.handleUpdateProfilePicture}
+            imgSrc={newPictureSrc}
+          ></Crop>
+        </StyledModal>
       </div>
     </label>
   );

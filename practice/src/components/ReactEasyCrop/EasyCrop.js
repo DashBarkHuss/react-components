@@ -3,6 +3,13 @@ import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import './EasyCrop.css';
 
+/**
+ * Renders a <EasyCrop /> component
+ * @param  props
+ * @param  props.handleUpdateProfilePicture
+ * @param  props.cropRatio obj
+ **/
+
 export default function EasyCrop(props) {
   const [crop, onCropChange] = useState({ x: 0, y: 0 });
   const [zoom, onZoomChange] = useState(1);
