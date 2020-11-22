@@ -18,8 +18,8 @@ const userLoggedIn = true;
 /**
  * Renders a <ProfileInfo /> component
  * @param  props
- * @param  props.firstName
- * @param  props.displayName
+ * @param  props.wishlistName
+ * @param  props.handle
  * @param  props.profilePic
  * @param  props.profileMessage
  * @param  props.handleUpdateProfilePicture
@@ -35,13 +35,13 @@ export default function EditableProfileInfo(props) {
           ></EditableProfilePicture>
         </div>
         <div className="container name">
-          <div className="wishlist_name">{props.firstName}'s Wishlist</div>
-          <div className="user_name">{props.displayName}</div>
+          <div className="wishlist_name">{props.wishlistName}</div>
+          <div className="user_name">@{props.handle}</div>
         </div>
       </div>
       <div className="profile_message">
         {props.profileMessage}
-        {userLoggedIn && <EditIconButton />}
+        <EditIconButton />
       </div>
     </div>
   );

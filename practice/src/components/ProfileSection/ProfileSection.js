@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 //fake data for now
 import coverPicUrl from './banner_pic.jpg';
 import profilePic from './profilePic.jpeg';
-
+import StyledModal from '../StyledModal/StyledModal';
+import UpdateProfileInfo from '../UpdateProfileInfo/UpdateProfileInfo';
 //change these to match your backend routes
 const postImageRoute = 'http://localhost:4000/image';
 
@@ -14,17 +15,17 @@ const postImageRoute = 'http://localhost:4000/image';
 const user = {
   coverPicUrl: coverPicUrl,
   profilePic: profilePic,
-  displayName: '@dashie',
-  // find out limit
+  handle: 'dashie',
+  // find out character limit for profile message
   profileMessage: 'Thanks for coming to my page!',
-  firstName: 'Dashie',
+  wishlistName: `Dashie's Wishlist`,
 };
 /**
  * Renders a <ProfileSection /> component
  * @param  props
  * @param  props.coverPicUrl
- * @param  props.firstName
- * @param  props.displayName
+ * @param  props.wishlistName
+ * @param  props.handle
  * @param  props.profilePic
  * @param  props.profileMessage
  */
@@ -39,8 +40,8 @@ function ProfileSection(props) {
     // all of these would be set through a get request in real life using fetch
     setProfilePicture(user.profilePic);
     setCoverImage(user.coverPicUrl);
-    setWishlistName(user.firstName);
-    setHandle(user.displayName);
+    setWishlistName(user.wishlistName);
+    setHandle(user.handle);
     setMessage(user.profileMessage);
   }, []);
 
@@ -70,7 +71,35 @@ function ProfileSection(props) {
       });
   };
   // fetch post json
-  const fetchPostJson = () => {};
+  const fetchPostJson = async (data, route, setStateCallbacks) => {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    await fetch(route, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers,
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        setStateCallbacks();
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  };
+  // fetch get json
+  const fetchGet = async (route) => {
+    await fetch(route)
+      .then((res) => res.text())
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  };
 
   // route post /alias/update
   // profilePicture
@@ -79,8 +108,25 @@ function ProfileSection(props) {
   const handleUpdateProfilePicture = (image) => {
     fetchPostImage(image, 'image', postImageRoute, setProfilePicture);
   };
-  const handleCheckHandleAvailability = () => {};
-  const handleUpdateHandle = () => {};
+  const handleCheckHandleAvailability = async (handle) => {
+    const available = await fetch(`http://localhost:4000/users?handle=${handle}`)
+      .then((res) => {
+        return res.text();
+      })
+      .then((text) => {
+        return !(text === 'true');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+    return available;
+  };
+  const handleUpdateHandle = (handle) => {
+    fetchPostJson({ handle }, 'http://localhost:3000/handle', () => {
+      setHandle(handle);
+    });
+  };
 
   // route post /wishlist update
   // coverImage
@@ -99,8 +145,8 @@ function ProfileSection(props) {
         handleUpdateCoverImage={handleUpdateCoverImage}
       ></EditableCoverImage>
       <EditableProfileInfo
-        firstName={wishlistName}
-        displayName={handle}
+        wishlistName={wishlistName}
+        handle={handle}
         profileMessage={message}
         profilePic={profilePicture}
         handleUpdateProfilePicture={handleUpdateProfilePicture}
@@ -108,9 +154,9 @@ function ProfileSection(props) {
 
       {/* <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage> */}
       <div className="edit_profile_button__container">
-        <Button color="primary" variant="outlined">
-          Edit Profile
-        </Button>
+        <UpdateProfileInfo
+          handleCheckHandleAvailability={handleCheckHandleAvailability}
+        ></UpdateProfileInfo>
       </div>
     </div>
   );

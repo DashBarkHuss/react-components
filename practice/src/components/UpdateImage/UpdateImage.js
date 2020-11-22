@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import StyledIconButton from '../StyledIconButton/StyledIconButton';
-import StyledModal from './StyledModal/StyledModal';
+import StyledModal from '../StyledModal/StyledModal';
 import Crop from '../Crop/Crop';
+import UpdateImageButton from './UpdateImageButton';
 
 /**
  * Renders a <UpdateImage /> component
@@ -11,55 +12,37 @@ import Crop from '../Crop/Crop';
  * @param  props.cropShape
  * @param  props.size
  * @param  props.children
+ * @param  props.ariaLabel
  * @param  props.finalImageDimensions ex- {width: 300, height: 300}
  **/
 export default function InputProfilePic(props) {
-  const fileInput = React.useRef();
-  const [newPictureSrc, setNewPictureSrc] = useState(null);
+  const [newImageSrc, setNewImageSrc] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalClose = () => {
     setModalOpen(false);
   };
+  const handleNewImageSrc = (image) => {
+    setNewImageSrc(image);
+    setModalOpen(true);
+  };
 
   return (
     <>
-      <label>
-        {/* Button */}
-        <input
-          ref={fileInput}
-          type="file"
-          style={{ display: 'none' }}
-          accept="image/x-png,image/gif,image/jpeg"
-          onChange={(e) => {
-            const image = e.target.files[0];
-            if (image) {
-              const imageURl = URL.createObjectURL(image);
-              setNewPictureSrc(imageURl);
-              setModalOpen(true);
-              e.target.value = null;
-            } else {
-              setNewPictureSrc(null);
-              e.target.value = null;
-            }
-          }}
-        />
-        <StyledIconButton
-          onClick={() => fileInput.current.click()}
-          size={props.size || 'small'}
-          ariaLabel="update profile picture"
-        >
-          {props.children}
-        </StyledIconButton>
-      </label>
-      {/* Button end*/}
+      <UpdateImageButton
+        size="medium"
+        ariaLabel={props.ariaLabel}
+        handleNewImageSrc={handleNewImageSrc}
+      >
+        {props.children}
+      </UpdateImageButton>
 
       {/* Modal start */}
       <StyledModal open={modalOpen} ariaLabel="crop modal" onClose={handleModalClose}>
         <Crop
           onClose={handleModalClose}
           onCroppedImageCreated={props.handleUpdateImage}
-          imgSrc={newPictureSrc}
+          imgSrc={newImageSrc}
           cropShape={props.cropShape}
           aspect={props.aspect}
           finalImageDimensions={props.finalImageDimensions}
