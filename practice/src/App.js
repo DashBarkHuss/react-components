@@ -1,6 +1,8 @@
 import './App.css';
 
 import ProfileSection from './components/ProfileSection/ProfileSection';
+import ReactHookForm from './components/ReackHookForm/ReactHookForm.js';
+
 // import coverPicUrl from './banner.png';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -36,6 +38,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <div style={{ backgroundColor: '#fafafa' }}>
+          {/* <ReactHookForm></ReactHookForm> */}
           <ProfileSection></ProfileSection>
         </div>
       </div>

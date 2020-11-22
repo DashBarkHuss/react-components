@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -12,31 +12,26 @@ import { useForm } from 'react-hook-form';
  * @param  props.handleCheckHandleAvailability
  **/
 export default function UpdateProfileForm(props) {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, clearErrors } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
 
-  const [handleErrMsg, setHandleErrMsg] = useState('');
   const [wishlistNameErrMsg, setWishlistNameErrMsg] = useState('');
   const [handle, setHandle] = useState(null);
+  const input = useRef(null);
 
-  const handleChangeHandle = (e) => {
-    setHandleErrMsg('');
-    const handle = e.target.value.trim();
-    setHandle(handle);
+  const validateHandle = async (handle) => {
     if (!handle) return;
-    if (handle.length >= 15) {
-      setHandleErrMsg('handle must be less than 15 characters');
-    }
-    const regex = /^[0-9A-Za-z_-]+$/;
-    if (!regex.test(handle)) {
-      setHandleErrMsg(`Your username can only contain letters, numbers, '_', or '-'`);
-    }
-    setTimeout(async function () {
-      if (handle === e.target.value.trim()) {
-        console.log('here');
-        const available = await props.handleCheckHandleAvailability(handle);
-        if (!available) setHandleErrMsg('handle not available');
-      }
-    }, 1000);
+    const available = await new Promise((resolve) => {
+      setTimeout(async function () {
+        if (handle === input.current.children[0].value) {
+          const avail = await props.handleCheckHandleAvailability(handle);
+          resolve(avail);
+        }
+      }, 1000);
+    });
+    return available || 'Opps';
   };
   const handleChangeWishlistName = (e) => {
     setWishlistNameErrMsg('');
@@ -46,18 +41,45 @@ export default function UpdateProfileForm(props) {
       setWishlistNameErrMsg('Wishlist name must be less than 22 characters');
     }
   };
+  const onSubmit = (data) => console.log(data);
   return (
-    <form autoComplete="off" action="http://localhost:4000/form" id="update-profile-form">
-      <FormControl style={{ width: '15em' }} error={handleErrMsg} onChange={handleChangeHandle}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+      action="http://localhost:4000/form"
+      id="update-profile-form"
+    >
+      <FormControl
+        error={errors.handle && !(errors.handle.type === 'required') ? true : false}
+        style={{ width: '15em' }}
+      >
         <InputLabel htmlFor="handle-input">handle</InputLabel>
         <Input
+          ref={input}
           name="handle"
-          spellcheck="false"
+          onChange={(e) => {
+            setHandle(e.target.value);
+            if (errors.handle !== undefined) {
+              if (errors.handle.type === 'validate') {
+                clearErrors(['handle']);
+              }
+            }
+          }}
+          inputRef={register({
+            validate: async (value) => await validateHandle(value),
+            required: 'handle required',
+            maxLength: { value: 14, message: 'handle must be less than 15 characters' },
+            pattern: {
+              value: /^[0-9A-Za-z_-]+$/,
+              message: `Your username can only contain letters, numbers, '_', or '-'`,
+            },
+          })}
+          spellCheck="false"
           id="handle-input"
           aria-describedby="handle-helper-text"
         />
         <FormHelperText id="handle-helper-text">
-          {handleErrMsg ||
+          {errors.handle?.message ||
             `www.wishtender.com/${
               handle || props.handle ? (handle || props.handle).toLowerCase() : 'handle'
             }`}
@@ -65,25 +87,21 @@ export default function UpdateProfileForm(props) {
       </FormControl>
       <FormControl
         style={{ width: '15em' }}
-        error={wishlistNameErrMsg}
+        // error={wishlistNameErrMsg}
         onChange={handleChangeWishlistName}
       >
         <InputLabel htmlFor="wishlist-name-input">Wishlist Name</InputLabel>
         <Input
           name="wishlistName"
-          spellcheck="false"
+          // inputRef={register}
+          spellCheck="false"
           id="wishlist-name-input"
           aria-describedby="wishlist-name-helper-text"
         />
         <FormHelperText id="wishlist-name-helper-text">{wishlistNameErrMsg || ' '}</FormHelperText>
       </FormControl>
       <br></br>
-      <Button
-        disabled={handleErrMsg || wishlistNameErrMsg}
-        type="submit"
-        form="update-profile-form"
-        value="Submit"
-      >
+      <Button type="submit" form="update-profile-form" value="Submit">
         Submit
       </Button>
     </form>
