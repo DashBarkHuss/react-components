@@ -63,7 +63,7 @@
   .user_name {
     font-size: 1.3rem;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform: lowercase;
   }
 
   .profile_message {

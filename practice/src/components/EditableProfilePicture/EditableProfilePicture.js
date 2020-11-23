@@ -18,6 +18,7 @@ export default function EditableProfilePicture(props) {
     <div className="editable_profile_picture__container">
       <div className="update_profile_picture_button__container">
         <UpdateImage
+          size="small"
           aspect={aspect.w / aspect.h}
           ariaLabel="Update Profile Image"
           finalImageDimensions={{ width: aspect.w * 300, height: aspect.h * 300 }}

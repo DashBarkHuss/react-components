@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
  * Renders a <UpdateProfileForm /> component
  * @param  props
  * @param  props.handleCheckHandleAvailability
+ * @param  props.handleCheckHandleAvailability
  **/
 export default function UpdateProfileForm(props) {
   const { register, handleSubmit, errors, clearErrors } = useForm({
@@ -25,36 +26,31 @@ export default function UpdateProfileForm(props) {
     if (!handle) return;
     const available = await new Promise((resolve) => {
       setTimeout(async function () {
-        if (handle === input.current.children[0].value) {
-          const avail = await props.handleCheckHandleAvailability(handle);
-          resolve(avail);
+        if (input.current) {
+          if (handle === input.current.children[0].value) {
+            const avail = await props.handleCheckHandleAvailability(handle);
+            resolve(avail);
+          }
         }
       }, 1000);
     });
-    return available || 'Opps';
+    return available || 'This handle is unavailable';
   };
-  const handleChangeWishlistName = (e) => {
-    setWishlistNameErrMsg('');
-    const wishlistName = e.target.value.trim();
-    if (!wishlistName) return;
-    if (wishlistName.length >= 22) {
-      setWishlistNameErrMsg('Wishlist name must be less than 22 characters');
-    }
+
+  const onSubmit = (data) => {
+    if (data.handle) props.handleUpdateHandle(data.handle);
+    if (data.wishlistName) props.handleUpdateWishlistName(data.wishlistName);
+    if (!data.wishlistName && !data.handle) props.onClose();
   };
-  const onSubmit = (data) => console.log(data);
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      autoComplete="off"
-      action="http://localhost:4000/form"
-      id="update-profile-form"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" id="update-profile-form">
       <FormControl
         error={errors.handle && !(errors.handle.type === 'required') ? true : false}
         style={{ width: '15em' }}
       >
         <InputLabel htmlFor="handle-input">handle</InputLabel>
         <Input
+          placeholder={props.handle}
           ref={input}
           name="handle"
           onChange={(e) => {
@@ -67,7 +63,6 @@ export default function UpdateProfileForm(props) {
           }}
           inputRef={register({
             validate: async (value) => await validateHandle(value),
-            required: 'handle required',
             maxLength: { value: 14, message: 'handle must be less than 15 characters' },
             pattern: {
               value: /^[0-9A-Za-z_-]+$/,
@@ -86,23 +81,27 @@ export default function UpdateProfileForm(props) {
         </FormHelperText>
       </FormControl>
       <FormControl
+        error={errors.wishlistName && !(errors.wishlistName.type === 'required') ? true : false}
         style={{ width: '15em' }}
-        // error={wishlistNameErrMsg}
-        onChange={handleChangeWishlistName}
       >
         <InputLabel htmlFor="wishlist-name-input">Wishlist Name</InputLabel>
         <Input
+          placeholder={props.wishlistName}
           name="wishlistName"
-          // inputRef={register}
+          inputRef={register({
+            maxLength: { value: 22, message: 'wishlist name must be less than 23 characters' },
+          })}
           spellCheck="false"
           id="wishlist-name-input"
           aria-describedby="wishlist-name-helper-text"
         />
-        <FormHelperText id="wishlist-name-helper-text">{wishlistNameErrMsg || ' '}</FormHelperText>
+        <FormHelperText id="wishlist-name-helper-text">
+          {errors.wishlistName?.message || ' '}
+        </FormHelperText>
       </FormControl>
       <br></br>
       <Button type="submit" form="update-profile-form" value="Submit">
-        Submit
+        Save
       </Button>
     </form>
   );

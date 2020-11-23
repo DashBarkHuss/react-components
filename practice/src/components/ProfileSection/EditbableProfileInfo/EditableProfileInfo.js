@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './EditableProfileInfo.css';
 import EditableProfilePicture from '../../EditableProfilePicture/EditableProfilePicture';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import UpdateMessageForm from './UpdateMessageForm';
 
 function EditIconButton(props) {
   return (
-    <IconButton size="small" aria-label="edit">
+    <IconButton onClick={props.onClick} size="small" aria-label="edit">
       <EditIcon />
     </IconButton>
   );
@@ -16,15 +17,18 @@ function EditIconButton(props) {
 const userLoggedIn = true;
 
 /**
- * Renders a <ProfileInfo /> component
+ * Renders a <EditableProfileInfo /> component
  * @param  props
  * @param  props.wishlistName
  * @param  props.handle
  * @param  props.profilePic
- * @param  props.profileMessage
+ * @param  props.wishlistMessage
  * @param  props.handleUpdateProfilePicture
+ * @param  props.handleUpdateWishlistMessage
  */
 export default function EditableProfileInfo(props) {
+  const [editMessageVisible, setEditMessageVisible] = useState(false);
+
   return (
     <div className="info">
       <div className="container flex">
@@ -40,8 +44,24 @@ export default function EditableProfileInfo(props) {
         </div>
       </div>
       <div className="profile_message">
-        {props.profileMessage}
-        <EditIconButton />
+        {/* The user is <b>{true ? props.handle : 'not'}</b> logged in. */}
+        {editMessageVisible ? (
+          <UpdateMessageForm
+            handleUpdateWishlistMessage={props.handleUpdateWishlistMessage}
+            onClose={() => {
+              setEditMessageVisible(false);
+            }}
+          ></UpdateMessageForm>
+        ) : (
+          <>
+            {props.wishlistMessage}
+            <EditIconButton
+              onClick={() => {
+                setEditMessageVisible(true);
+              }}
+            />
+          </>
+        )}
       </div>
     </div>
   );

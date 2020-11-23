@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import StyledModal from '../StyledModal/StyledModal';
-import Input from '@material-ui/core/Input';
-import TextField from '@material-ui/core/TextField';
 import UpdateProfileForm from './UpdateProfileForm/UpdateProfileForm';
 
 /**
@@ -35,6 +33,11 @@ export default function UpdateProfileInfo(props) {
       <StyledModal open={modalOpen} ariaLabel="crop modal" onClose={handleModalClose}>
         <UpdateProfileForm
           handleCheckHandleAvailability={props.handleCheckHandleAvailability}
+          handleUpdateHandle={props.handleUpdateHandle}
+          handleUpdateWishlistName={props.handleUpdateWishlistName}
+          onClose={handleModalClose}
+          wishlistName={props.wishlistName}
+          handle={props.handle}
         ></UpdateProfileForm>
       </StyledModal>
       {/* Modal end */}

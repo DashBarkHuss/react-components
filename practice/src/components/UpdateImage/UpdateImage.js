@@ -30,7 +30,7 @@ export default function InputProfilePic(props) {
   return (
     <>
       <UpdateImageButton
-        size="medium"
+        size={props.size}
         ariaLabel={props.ariaLabel}
         handleNewImageSrc={handleNewImageSrc}
       >

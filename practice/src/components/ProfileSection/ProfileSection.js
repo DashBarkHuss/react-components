@@ -8,6 +8,7 @@ import coverPicUrl from './banner_pic.jpg';
 import profilePic from './profilePic.jpeg';
 import StyledModal from '../StyledModal/StyledModal';
 import UpdateProfileInfo from '../UpdateProfileInfo/UpdateProfileInfo';
+import { server } from 'sinon';
 //change these to match your backend routes
 const postImageRoute = 'http://localhost:4000/image';
 
@@ -17,7 +18,7 @@ const user = {
   profilePic: profilePic,
   handle: 'dashie',
   // find out character limit for profile message
-  profileMessage: 'Thanks for coming to my page!',
+  wishlistMessage: 'Thanks for coming to my page!',
   wishlistName: `Dashie's Wishlist`,
 };
 /**
@@ -34,7 +35,7 @@ function ProfileSection(props) {
   const [coverImage, setCoverImage] = useState(null);
   const [wishlistName, setWishlistName] = useState(null);
   const [handle, setHandle] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [wishlistMessage, setWishlistMessage] = useState(null);
 
   useEffect(() => {
     // all of these would be set through a get request in real life using fetch
@@ -42,7 +43,7 @@ function ProfileSection(props) {
     setCoverImage(user.coverPicUrl);
     setWishlistName(user.wishlistName);
     setHandle(user.handle);
-    setMessage(user.profileMessage);
+    setWishlistMessage(user.wishlistMessage);
   }, []);
 
   // fetch post image
@@ -63,7 +64,7 @@ function ProfileSection(props) {
       })
       .then((img) => {
         setStateCallback(URL.createObjectURL(image));
-        console.log(img);
+        console.log(img + 'posted to server');
       })
       .catch((err) => {
         console.log(err);
@@ -81,6 +82,7 @@ function ProfileSection(props) {
     })
       .then((res) => res.json())
       .then((response) => {
+        console.log('server response: ', response);
         setStateCallbacks();
       })
       .catch((err) => {
@@ -101,7 +103,7 @@ function ProfileSection(props) {
       });
   };
 
-  // route post /alias/update
+  // route post /alias
   // profilePicture
   // handle
 
@@ -123,7 +125,7 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPostJson({ handle }, 'http://localhost:3000/handle', () => {
+    fetchPostJson({ handle }, 'http://localhost:4000/alias', () => {
       setHandle(handle);
     });
   };
@@ -135,8 +137,17 @@ function ProfileSection(props) {
   const handleUpdateCoverImage = (image) => {
     fetchPostImage(image, 'image', postImageRoute, setCoverImage);
   };
-  const handleUpdateMessage = () => {};
-  const handleUpdateWishlistName = () => {};
+  const handleUpdateWishlistMessage = (wishlistMessage) => {
+    fetchPostJson({ wishlistMessage }, 'http://localhost:4000/wishlist', () => {
+      setWishlistMessage(wishlistMessage);
+    });
+  };
+
+  const handleUpdateWishlistName = (wishlistName) => {
+    fetchPostJson({ wishlistName }, 'http://localhost:4000/wishlist', () => {
+      setWishlistName(wishlistName);
+    });
+  };
 
   return (
     <div className="profile_section">
@@ -147,14 +158,19 @@ function ProfileSection(props) {
       <EditableProfileInfo
         wishlistName={wishlistName}
         handle={handle}
-        profileMessage={message}
+        wishlistMessage={wishlistMessage}
         profilePic={profilePicture}
         handleUpdateProfilePicture={handleUpdateProfilePicture}
+        handleUpdateWishlistMessage={handleUpdateWishlistMessage}
       ></EditableProfileInfo>
 
-      {/* <CoverImage coverPicUrl={props.coverPicUrl}></CoverImage> */}
       <div className="edit_profile_button__container">
         <UpdateProfileInfo
+          wishlistName={wishlistName}
+          handleUpdateWishlistMessage={handleUpdateWishlistMessage}
+          handle={handle}
+          handleUpdateWishlistName={handleUpdateWishlistName}
+          handleUpdateHandle={handleUpdateHandle}
           handleCheckHandleAvailability={handleCheckHandleAvailability}
         ></UpdateProfileInfo>
       </div>

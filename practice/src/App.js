@@ -28,9 +28,7 @@ const theme = createMuiTheme({
 });
 theme.overrides = {
   MuiButton: {
-    root: {
-      border: '5px solid red',
-    },
+    root: {},
   },
 };
 function App() {
