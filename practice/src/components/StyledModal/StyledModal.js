@@ -31,6 +31,7 @@ const dialogStyles = makeStyles((theme) => {
     root: {
       '& .MuiDialog-container.MuiDialog-scrollBody': {
         display: 'flex',
+        overflow: 'scroll',
       },
       '& .MuiDialog-paper': {
         margin: 'auto',
@@ -43,7 +44,7 @@ const dialogStyles = makeStyles((theme) => {
           width: '100%',
           height: '100%',
           margin: 'auto',
-          padding: '90px 0 0 0',
+          padding: '0px 0 0 0',
           boxSizing: 'border-box',
           maxWidth: 'none',
           borderRadius: '0',

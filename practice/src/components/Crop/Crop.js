@@ -4,7 +4,16 @@ import EasyCrop from '../ReactEasyCrop/EasyCrop';
 import CloseButton from '../CloseButton/CloseButton';
 import { getCroppedImg } from '../ReactEasyCrop/utils';
 import Button from '@material-ui/core/Button';
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => {
+  return {
+    title: {
+      margin: theme.spacing(2),
+    },
+  };
+});
 
 /**
  * Renders a <Crop /> component
@@ -17,6 +26,7 @@ import { Container } from '@material-ui/core';
  **/
 export default function Crop(props) {
   const [crop, setCrop] = useState(null);
+  const classes = useStyles();
 
   const onCropComplete = (cropInfo) => {
     setCrop(cropInfo);
@@ -45,7 +55,7 @@ export default function Crop(props) {
   return (
     <form className="crop-and-upload-container">
       {/* <CloseButton onClose={props.onClose}></CloseButton> */}
-      <p className="crop-label">Profile Picture</p>
+      <Typography className={classes.title}>Profile Picture</Typography>
       <EasyCrop
         imgSrc={props.imgSrc || ''}
         onCropComplete={onCropComplete}

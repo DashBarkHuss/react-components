@@ -3,7 +3,7 @@ import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => {
         margin: theme.spacing(2),
         width: '80%',
       },
+    },
+    title: {
+      margin: theme.spacing(2),
     },
   };
 });
@@ -63,6 +66,7 @@ export default function UpdateProfileForm(props) {
       autoComplete="off"
       id="update-profile-form"
     >
+      <Typography className={classes.title}>Profile Info</Typography>
       <FormControl error={errors.handle && !(errors.handle.type === 'required') ? true : false}>
         <InputLabel htmlFor="handle-input">handle</InputLabel>
         <Input
