@@ -1,7 +1,6 @@
 import './App.css';
 
 import ProfileSection from './components/ProfileSection/ProfileSection';
-import ReactHookForm from './components/ReackHookForm/ReactHookForm.js';
 
 // import coverPicUrl from './banner.png';
 
@@ -25,6 +24,7 @@ const theme = createMuiTheme({
   shape: {
     borderRadius: 50,
   },
+  // spacing: { spacing: 4 },
 });
 theme.overrides = {
   MuiButton: {

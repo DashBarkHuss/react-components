@@ -48,6 +48,7 @@ export default function EditableProfileInfo(props) {
         {editMessageVisible ? (
           <UpdateMessageForm
             handleUpdateWishlistMessage={props.handleUpdateWishlistMessage}
+            wishlistMessage={props.wishlistMessage}
             onClose={() => {
               setEditMessageVisible(false);
             }}

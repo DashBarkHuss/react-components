@@ -20,6 +20,7 @@ const useStyles = makeStyles({
  * @param  props
  * @param  props.onClose
  * @param  props.handleUpdateWishlistMessage
+ * @param  props.wishlistMessage
  */
 
 export default function UpdateMessageForm(props) {
@@ -30,7 +31,7 @@ export default function UpdateMessageForm(props) {
 
   const classes = useStyles();
   const onSubmit = (data) => {
-    props.handleUpdateWishlistMessage(data.message);
+    if (data.message) props.handleUpdateWishlistMessage(data.message);
     props.onClose(false);
   };
   return (
@@ -38,6 +39,7 @@ export default function UpdateMessageForm(props) {
       <TextField
         name="message"
         className={classes.root}
+        defaultValue={props.wishlistMessage}
         variant="outlined"
         style={{ width: '60%' }}
         spellCheck="false"

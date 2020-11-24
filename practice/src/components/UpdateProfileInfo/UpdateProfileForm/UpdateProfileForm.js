@@ -5,6 +5,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      '& .MuiFormControl-root': {
+        margin: theme.spacing(2),
+        width: '80%',
+      },
+    },
+  };
+});
 
 /**
  * Renders a <UpdateProfileForm /> component
@@ -18,12 +30,12 @@ export default function UpdateProfileForm(props) {
     reValidateMode: 'onChange',
   });
 
-  const [wishlistNameErrMsg, setWishlistNameErrMsg] = useState('');
   const [handle, setHandle] = useState(null);
   const input = useRef(null);
+  const classes = useStyles();
 
   const validateHandle = async (handle) => {
-    if (!handle) return;
+    if (!handle || handle === props.handle) return;
     const available = await new Promise((resolve) => {
       setTimeout(async function () {
         if (input.current) {
@@ -38,19 +50,28 @@ export default function UpdateProfileForm(props) {
   };
 
   const onSubmit = (data) => {
-    if (data.handle) props.handleUpdateHandle(data.handle);
-    if (data.wishlistName) props.handleUpdateWishlistName(data.wishlistName);
-    if (!data.wishlistName && !data.handle) props.onClose();
+    if (data.handle && data.handle !== props.handle) props.handleUpdateHandle(data.handle);
+    if (data.wishlistName && data.wishlistName !== props.wishlistName) {
+      props.handleUpdateWishlistName(data.wishlistName);
+    }
+    props.onClose();
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" id="update-profile-form">
-      <FormControl
-        error={errors.handle && !(errors.handle.type === 'required') ? true : false}
-        style={{ width: '15em' }}
-      >
+    <form
+      className={classes.root}
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+      id="update-profile-form"
+    >
+      <FormControl error={errors.handle && !(errors.handle.type === 'required') ? true : false}>
         <InputLabel htmlFor="handle-input">handle</InputLabel>
         <Input
-          placeholder={props.handle}
+          onFocus={(e) => {
+            if (!e.target.value) e.target.value = props.handle;
+          }}
+          onBlur={(e) => {
+            if (e.target.value === props.handle) e.target.value = null;
+          }}
           ref={input}
           name="handle"
           onChange={(e) => {
@@ -80,13 +101,18 @@ export default function UpdateProfileForm(props) {
             }`}
         </FormHelperText>
       </FormControl>
+      <br></br>
       <FormControl
         error={errors.wishlistName && !(errors.wishlistName.type === 'required') ? true : false}
-        style={{ width: '15em' }}
       >
         <InputLabel htmlFor="wishlist-name-input">Wishlist Name</InputLabel>
         <Input
-          placeholder={props.wishlistName}
+          onFocus={(e) => {
+            if (!e.target.value) e.target.value = props.wishlistName;
+          }}
+          onBlur={(e) => {
+            if (e.target.value === props.wishlistName) e.target.value = null;
+          }}
           name="wishlistName"
           inputRef={register({
             maxLength: { value: 22, message: 'wishlist name must be less than 23 characters' },
@@ -100,7 +126,14 @@ export default function UpdateProfileForm(props) {
         </FormHelperText>
       </FormControl>
       <br></br>
-      <Button type="submit" form="update-profile-form" value="Submit">
+      <Button
+        variant="contained"
+        disableElevation
+        color="primary"
+        type="submit"
+        form="update-profile-form"
+        value="Submit"
+      >
         Save
       </Button>
     </form>

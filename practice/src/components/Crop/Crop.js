@@ -3,6 +3,8 @@ import './Crop.css';
 import EasyCrop from '../ReactEasyCrop/EasyCrop';
 import CloseButton from '../CloseButton/CloseButton';
 import { getCroppedImg } from '../ReactEasyCrop/utils';
+import Button from '@material-ui/core/Button';
+import { Container } from '@material-ui/core';
 
 /**
  * Renders a <Crop /> component
@@ -52,7 +54,9 @@ export default function Crop(props) {
         aspect={props.aspect}
         finalImageDimensions={props.finalImageDimensions}
       ></EasyCrop>
-      <button onClick={onCropAndSave}>Crop and Save</button>
+      <Button variant="contained" color="primary" disableElevation onClick={onCropAndSave}>
+        Crop and Save
+      </Button>
     </form>
   );
 }
