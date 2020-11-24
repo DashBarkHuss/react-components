@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import StyledModal from '../StyledModal/StyledModal';
+import StyledDialog from '../StyledDialog/StyledDialog';
 import UpdateProfileForm from './UpdateProfileForm/UpdateProfileForm';
 
 /**
@@ -10,18 +10,18 @@ import UpdateProfileForm from './UpdateProfileForm/UpdateProfileForm';
  * @param  props.handleUpdateHandle
  */
 export default function UpdateProfileInfo(props) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
-  const handleModalOpen = () => {
-    setModalOpen(true);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
   };
 
   return (
     <>
       <Button
-        onClick={handleModalOpen}
+        onClick={handleDialogOpen}
         color="primary"
         aria-label="update profile info"
         variant="outlined"
@@ -29,18 +29,18 @@ export default function UpdateProfileInfo(props) {
         Edit Profile
       </Button>
 
-      {/* Modal start */}
-      <StyledModal open={modalOpen} ariaLabel="crop modal" onClose={handleModalClose}>
+      {/* Dialog start */}
+      <StyledDialog open={dialogOpen} ariaLabel="crop dialog" onClose={handleDialogClose}>
         <UpdateProfileForm
           handleCheckHandleAvailability={props.handleCheckHandleAvailability}
           handleUpdateHandle={props.handleUpdateHandle}
           handleUpdateWishlistName={props.handleUpdateWishlistName}
-          onClose={handleModalClose}
+          onClose={handleDialogClose}
           wishlistName={props.wishlistName}
           handle={props.handle}
         ></UpdateProfileForm>
-      </StyledModal>
-      {/* Modal end */}
+      </StyledDialog>
+      {/* Dialog end */}
     </>
   );
 }

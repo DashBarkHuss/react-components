@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StyledIconButton from '../StyledIconButton/StyledIconButton';
-import StyledModal from '../StyledModal/StyledModal';
+import StyledDialog from '../StyledDialog/StyledDialog';
 import Crop from '../Crop/Crop';
 import UpdateImageButton from './UpdateImageButton';
 
@@ -17,14 +17,14 @@ import UpdateImageButton from './UpdateImageButton';
  **/
 export default function InputProfilePic(props) {
   const [newImageSrc, setNewImageSrc] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
   const handleNewImageSrc = (image) => {
     setNewImageSrc(image);
-    setModalOpen(true);
+    setDialogOpen(true);
   };
 
   return (
@@ -37,18 +37,18 @@ export default function InputProfilePic(props) {
         {props.children}
       </UpdateImageButton>
 
-      {/* Modal start */}
-      <StyledModal open={modalOpen} ariaLabel="crop modal" onClose={handleModalClose}>
+      {/* Dialog start */}
+      <StyledDialog open={dialogOpen} ariaLabel="crop dialog" onClose={handleDialogClose}>
         <Crop
-          onClose={handleModalClose}
+          onClose={handleDialogClose}
           onCroppedImageCreated={props.handleUpdateImage}
           imgSrc={newImageSrc}
           cropShape={props.cropShape}
           aspect={props.aspect}
           finalImageDimensions={props.finalImageDimensions}
         ></Crop>
-      </StyledModal>
-      {/* Modal end */}
+      </StyledDialog>
+      {/* Dialog end */}
     </>
   );
 }

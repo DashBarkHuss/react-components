@@ -66,7 +66,7 @@ export default function UpdateProfileForm(props) {
       autoComplete="off"
       id="update-profile-form"
     >
-      <Typography className={classes.title}>Profile Info</Typography>
+      <Typography className={classes.root}>Profile Info</Typography>
       <FormControl error={errors.handle && !(errors.handle.type === 'required') ? true : false}>
         <InputLabel htmlFor="handle-input">handle</InputLabel>
         <Input

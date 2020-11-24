@@ -1,5 +1,3 @@
-import React, { useRef, useState, useEffect } from 'react';
-import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import Container from '@material-ui/core/Container';
@@ -55,13 +53,13 @@ const dialogStyles = makeStyles((theme) => {
 });
 
 /**
- * Renders a <StyledModal /> component
+ * Renders a <StyledDialog /> component
  * @param  props
  * @param  props.open
  * @param  props.onClose
  * @param  props.ariaLabel
  **/
-export default function StyledModal(props) {
+export default function StyledDialog(props) {
   const buttonClasses = buttonStyles();
   const dialogClasses = dialogStyles();
   const containerClasses = containerStyles();
@@ -72,7 +70,7 @@ export default function StyledModal(props) {
         scroll="body"
         open={props.open}
         onClose={props.onClose}
-        aria-label={props.ariaLabel || 'modal'}
+        aria-label={props.ariaLabel || 'dialog'}
         className={dialogClasses.root}
       >
         <Container className={containerClasses.root}>

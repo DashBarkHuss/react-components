@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ProfileSection.css';
 import EditableProfileInfo from './EditbableProfileInfo/EditableProfileInfo.js';
 import EditableCoverImage from './EditableCoverImage/EditableCoverImage';
-import Button from '@material-ui/core/Button';
 //fake data for now
 import coverPicUrl from './banner_pic.jpg';
 import profilePic from './profilePic.jpeg';
-import StyledModal from '../StyledModal/StyledModal';
 import UpdateProfileInfo from '../UpdateProfileInfo/UpdateProfileInfo';
-import { server } from 'sinon';
 //change these to match your backend routes
 const postImageRoute = 'http://localhost:4000/image';
 
