@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import './ProfileSection.css';
-import EditableProfileInfo from './EditbableProfileInfo/EditableProfileInfo.js';
-import EditableCoverImage from './EditableCoverImage/EditableCoverImage';
+import React, { useState, useEffect } from "react";
+import "./ProfileSection.css";
+import EditableProfileInfo from "./EditbableProfileInfo/EditableProfileInfo.js";
+import EditableCoverImage from "./EditableCoverImage/EditableCoverImage";
 //fake data for now
-import coverPicUrl from './banner_pic.jpg';
-import profilePic from './profilePic.jpeg';
-import UpdateProfileInfo from '../UpdateProfileInfo/UpdateProfileInfo';
+import coverPicUrl from "./banner_pic.jpg";
+import profilePic from "./profilePic.jpeg";
+import UpdateProfileInfo from "./UpdateProfileInfo/UpdateProfileInfo";
 //change these to match your backend routes
-const postImageRoute = 'http://localhost:4000/image';
+const postImageRoute = "http://localhost:4000/image";
 
 //fake data for now
 const user = {
   coverPicUrl: coverPicUrl,
   profilePic: profilePic,
-  handle: 'dashie',
+  handle: "dashie",
   // find out character limit for profile message
-  wishlistMessage: 'Thanks for coming to my page!',
+  wishlistMessage: "Thanks for coming to my page!",
   wishlistName: `Dashie's Wishlist`,
 };
 /**
@@ -48,9 +48,9 @@ function ProfileSection(props) {
     var fd = new FormData();
     fd.append(fileName, image);
     fetch(route, {
-      method: 'POST',
+      method: "POST",
       body: fd,
-      mode: 'cors',
+      mode: "cors",
     })
       .then(async (response) => {
         if (response.status === 500) {
@@ -61,7 +61,7 @@ function ProfileSection(props) {
       })
       .then((img) => {
         setStateCallback(URL.createObjectURL(image));
-        console.log(img + 'posted to server');
+        console.log(img + "posted to server");
       })
       .catch((err) => {
         console.log(err);
@@ -71,15 +71,15 @@ function ProfileSection(props) {
   // fetch post json
   const fetchPostJson = async (data, route, setStateCallbacks) => {
     const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    headers.append("Content-Type", "application/json");
     await fetch(route, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
       headers,
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log('server response: ', response);
+        console.log("server response: ", response);
         setStateCallbacks();
       })
       .catch((err) => {
@@ -105,15 +105,17 @@ function ProfileSection(props) {
   // handle
 
   const handleUpdateProfilePicture = (image) => {
-    fetchPostImage(image, 'image', postImageRoute, setProfilePicture);
+    fetchPostImage(image, "image", postImageRoute, setProfilePicture);
   };
   const handleCheckHandleAvailability = async (handle) => {
-    const available = await fetch(`http://localhost:4000/users?handle=${handle}`)
+    const available = await fetch(
+      `http://localhost:4000/users?handle=${handle}`
+    )
       .then((res) => {
         return res.text();
       })
       .then((text) => {
-        return !(text === 'true');
+        return !(text === "true");
       })
       .catch((err) => {
         console.log(err);
@@ -122,7 +124,7 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPostJson({ handle }, 'http://localhost:4000/alias', () => {
+    fetchPostJson({ handle }, "http://localhost:4000/alias", () => {
       setHandle(handle);
     });
   };
@@ -132,16 +134,16 @@ function ProfileSection(props) {
   // message
   // wishlistName
   const handleUpdateCoverImage = (image) => {
-    fetchPostImage(image, 'image', postImageRoute, setCoverImage);
+    fetchPostImage(image, "image", postImageRoute, setCoverImage);
   };
   const handleUpdateWishlistMessage = (wishlistMessage) => {
-    fetchPostJson({ wishlistMessage }, 'http://localhost:4000/wishlist', () => {
+    fetchPostJson({ wishlistMessage }, "http://localhost:4000/wishlist", () => {
       setWishlistMessage(wishlistMessage);
     });
   };
 
   const handleUpdateWishlistName = (wishlistName) => {
-    fetchPostJson({ wishlistName }, 'http://localhost:4000/wishlist', () => {
+    fetchPostJson({ wishlistName }, "http://localhost:4000/wishlist", () => {
       setWishlistName(wishlistName);
     });
   };

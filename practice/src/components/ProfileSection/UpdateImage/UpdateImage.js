@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import StyledIconButton from '../StyledIconButton/StyledIconButton';
-import StyledDialog from '../StyledDialog/StyledDialog';
-import Crop from '../Crop/Crop';
+import StyledDialog from '../../common/StyledDialog/StyledDialog';
+import Crop from '../../common/Crop/Crop';
 import UpdateImageButton from './UpdateImageButton';
 
 /**

@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledIconButton from '../StyledIconButton/StyledIconButton';
+import StyledIconButton from '../../common/StyledIconButton/StyledIconButton';
 
 /**
  * Renders a <UpdateImage /> component

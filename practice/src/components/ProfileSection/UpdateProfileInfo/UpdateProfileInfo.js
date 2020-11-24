@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import StyledDialog from '../StyledDialog/StyledDialog';
+import StyledDialog from '../../common/StyledDialog/StyledDialog';
 import UpdateProfileForm from './UpdateProfileForm/UpdateProfileForm';
 
 /**

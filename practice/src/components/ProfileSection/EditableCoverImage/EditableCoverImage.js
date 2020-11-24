@@ -1,9 +1,8 @@
-import React from 'react';
-import CoverImage from '../CoverImage/CoverImage';
-import PhotoSizeSelectActual from '@material-ui/icons/PhotoSizeSelectActual';
-import './EditableCoverImage.css';
-import StyledIconButton from '../../StyledIconButton/StyledIconButton';
-import UpdateImage from '../../UpdateImage/UpdateImage';
+import React from "react";
+import CoverImage from "../CoverImage/CoverImage";
+import PhotoSizeSelectActual from "@material-ui/icons/PhotoSizeSelectActual";
+import "./EditableCoverImage.css";
+import UpdateImage from "../UpdateImage/UpdateImage";
 
 /**
  * Renders a <EditableCoverImage /> component

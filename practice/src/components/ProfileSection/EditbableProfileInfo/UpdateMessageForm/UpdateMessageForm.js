@@ -23,7 +23,11 @@ const useStyles = makeStyles({
  * @param  props.wishlistMessage
  */
 
-export default function UpdateMessageForm(props) {
+export default function UpdateMessageForm({
+  wishlistMessage,
+  handleUpdateWishlistMessage,
+  onClose,
+}) {
   const { register, handleSubmit, errors } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -31,15 +35,15 @@ export default function UpdateMessageForm(props) {
 
   const classes = useStyles();
   const onSubmit = (data) => {
-    if (data.message) props.handleUpdateWishlistMessage(data.message);
-    props.onClose(false);
+    if (data.message) handleUpdateWishlistMessage(data.message);
+    onClose(false);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
       <TextField
         name="message"
         className={classes.root}
-        defaultValue={props.wishlistMessage}
+        defaultValue={wishlistMessage}
         variant="outlined"
         style={{ width: '60%' }}
         spellCheck="false"

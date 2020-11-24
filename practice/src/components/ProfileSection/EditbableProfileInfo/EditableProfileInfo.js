@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import './EditableProfileInfo.css';
-import EditableProfilePicture from '../../EditableProfilePicture/EditableProfilePicture';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import UpdateMessageForm from './UpdateMessageForm';
+import React, { useState } from "react";
+import "./EditableProfileInfo.css";
+import EditableProfilePicture from "./EditableProfilePicture/EditableProfilePicture";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
+import UpdateMessageForm from "./UpdateMessageForm/UpdateMessageForm";
 
 function EditIconButton(props) {
   return (
@@ -12,9 +12,6 @@ function EditIconButton(props) {
     </IconButton>
   );
 }
-
-//toggle this--- in real life this would be session
-const userLoggedIn = true;
 
 /**
  * Renders a <EditableProfileInfo /> component

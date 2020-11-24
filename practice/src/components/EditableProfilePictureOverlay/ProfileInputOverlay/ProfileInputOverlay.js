@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import EditProfilePictureOverlay from '../EditProfilePictureOverlay/EditProfilePictureOverlay.js';
-import { blobToImage64 } from '../ReactEasyCrop/utils';
+import EditProfilePictureOverlay from './EditProfilePictureOverlay/EditProfilePictureOverlay.js';
+import { blobToImage64 } from '../../common/ReactEasyCrop/utils';
 
 export default function ProfileInputOverlay(props) {
   const [imgSrc, setImgSrc] = useState(null);

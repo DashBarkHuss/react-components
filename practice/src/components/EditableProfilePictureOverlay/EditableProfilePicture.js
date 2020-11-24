@@ -1,9 +1,9 @@
 import React from 'react';
 import './EditableProfilePicture.css';
-import '../ProfilePicture/ProfilePicture.js';
-import ProfilePicture from '../ProfilePicture/ProfilePicture';
-import EditProfilePictureOverlay from '../EditProfilePictureOverlay/EditProfilePictureOverlay';
-import ProfileInputOverlay from '../ProfileInputOverlay/ProfileInputOverlay';
+import './ProfileInputOverlay/EditProfilePictureOverlay/ProfilePicture/ProfilePicture.js';
+import ProfilePicture from './ProfileInputOverlay/EditProfilePictureOverlay/ProfilePicture/ProfilePicture';
+import EditProfilePictureOverlay from './ProfileInputOverlay/EditProfilePictureOverlay/EditProfilePictureOverlay';
+import ProfileInputOverlay from './ProfileInputOverlay/ProfileInputOverlay';
 import { Input } from '@material-ui/core';
 
 export default function EditableProfilePicture(props) {
