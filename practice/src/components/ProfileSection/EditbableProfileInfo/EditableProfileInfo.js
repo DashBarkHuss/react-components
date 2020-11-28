@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import "./EditableProfileInfo.css";
-import EditableProfilePicture from "./EditableProfilePicture/EditableProfilePicture";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
-import UpdateMessageForm from "./UpdateMessageForm/UpdateMessageForm";
+import React, { useState } from 'react';
+import './EditableProfileInfo.css';
+import EditableProfilePicture from './EditableProfilePicture/EditableProfilePicture';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import UpdateMessageForm from './UpdateMessageForm/UpdateMessageForm';
 
 function EditIconButton(props) {
   return (
@@ -22,6 +22,7 @@ function EditIconButton(props) {
  * @param  props.wishlistMessage
  * @param  props.handleUpdateProfilePicture
  * @param  props.handleUpdateWishlistMessage
+ * @param  props.isAuth
  */
 export default function EditableProfileInfo(props) {
   const [editMessageVisible, setEditMessageVisible] = useState(false);
@@ -44,6 +45,7 @@ export default function EditableProfileInfo(props) {
         {/* The user is <b>{true ? props.handle : 'not'}</b> logged in. */}
         {editMessageVisible ? (
           <UpdateMessageForm
+            isAuth={props.isAuth}
             handleUpdateWishlistMessage={props.handleUpdateWishlistMessage}
             wishlistMessage={props.wishlistMessage}
             onClose={() => {
@@ -53,11 +55,13 @@ export default function EditableProfileInfo(props) {
         ) : (
           <>
             {props.wishlistMessage}
-            <EditIconButton
-              onClick={() => {
-                setEditMessageVisible(true);
-              }}
-            />
+            {props.isAuth && (
+              <EditIconButton
+                onClick={() => {
+                  setEditMessageVisible(true);
+                }}
+              />
+            )}
           </>
         )}
       </div>

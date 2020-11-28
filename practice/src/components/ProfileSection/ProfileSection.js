@@ -11,23 +11,9 @@ import { UserContext } from '../../contexts/UserContext';
 import { useParams } from 'react-router-dom';
 const postImageRoute = 'http://localhost:4000/image';
 
-//fake data for now
-const user = {
-  coverPicUrl: coverPicUrl,
-  profilePic: profilePic,
-  handle: 'dashie',
-  // find out character limit for profile message
-  wishlistMessage: 'Thanks for coming to my page!',
-  wishlistName: `Dashie's Wishlist`,
-};
 /**
  * Renders a <ProfileSection /> component
  * @param  props
- * @param  props.coverPicUrl
- * @param  props.wishlistName
- * @param  props.handle
- * @param  props.profilePic
- * @param  props.profileMessage
  */
 function ProfileSection(props) {
   const [profilePicture, setProfilePicture] = useState(null);
@@ -35,34 +21,20 @@ function ProfileSection(props) {
   const [wishlistName, setWishlistName] = useState(null);
   const [handle, setHandle] = useState(null);
   const [wishlistMessage, setWishlistMessage] = useState(null);
+  const [isAuth, setIsAuth] = useState(false);
   const currentUser = useContext(UserContext);
   let { alias: aliasPath } = useParams();
 
   useEffect(() => {
-    /* populate alias and default wishlist
-     * need to get alias and wishlist for based on route
-     */
-    // pretend to fetch
-
     const cb = (json) => {
       setCoverImage(`${json.wishlist.coverPicUrl}`);
       setProfilePicture(`${json.profilePicture}`);
       setWishlistName(json.wishlist.wishlistName);
       setHandle(json.handle);
       setWishlistMessage(json.wishlist.wishlistMessage);
+      setIsAuth(currentUser ? currentUser.aliases.includes[json._id] : false);
     };
     fetchGet(`http://localhost:4000/aliases?handle=${aliasPath}`, cb);
-
-    // then this should set all the alias values
-    console.log(aliasPath + ': pretending to fetch');
-
-    // alias handle
-    // alias profile picture
-    // wishlist message
-    // wishlist cover photo
-    // wishlist name
-
-    // all of these would be set through a get request in real life using fetch
   }, []);
 
   // fetch post image
@@ -136,10 +108,6 @@ function ProfileSection(props) {
       });
   };
 
-  // route post /alias
-  // profilePicture
-  // handle
-
   const handleUpdateProfilePicture = (image) => {
     fetchPostImage(image, 'image', postImageRoute, setProfilePicture);
   };
@@ -187,6 +155,7 @@ function ProfileSection(props) {
       <EditableCoverImage
         coverPicUrl={coverImage}
         handleUpdateCoverImage={handleUpdateCoverImage}
+        isAuth={isAuth}
       ></EditableCoverImage>
 
       <EditableProfileInfo
@@ -196,18 +165,21 @@ function ProfileSection(props) {
         profilePic={profilePicture}
         handleUpdateProfilePicture={handleUpdateProfilePicture}
         handleUpdateWishlistMessage={handleUpdateWishlistMessage}
+        isAuth={isAuth}
       ></EditableProfileInfo>
-
-      <div className="edit_profile_button__container">
-        <UpdateProfileInfo
-          wishlistName={wishlistName}
-          handleUpdateWishlistMessage={handleUpdateWishlistMessage}
-          handle={handle}
-          handleUpdateWishlistName={handleUpdateWishlistName}
-          handleUpdateHandle={handleUpdateHandle}
-          handleCheckHandleAvailability={handleCheckHandleAvailability}
-        ></UpdateProfileInfo>
-      </div>
+      {isAuth && (
+        <div className="edit_profile_button__container">
+          <UpdateProfileInfo
+            wishlistName={wishlistName}
+            handleUpdateWishlistMessage={handleUpdateWishlistMessage}
+            handle={handle}
+            handleUpdateWishlistName={handleUpdateWishlistName}
+            handleUpdateHandle={handleUpdateHandle}
+            handleCheckHandleAvailability={handleCheckHandleAvailability}
+            isAuth={isAuth}
+          ></UpdateProfileInfo>
+        </div>
+      )}
     </div>
   );
 }

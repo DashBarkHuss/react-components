@@ -14,6 +14,7 @@ const currentUser = () => {
 };
 export default function App() {
   const [user, setUser] = useState();
+
   useEffect(() => {
     currentUser().then((user) => {
       setUser(user);
