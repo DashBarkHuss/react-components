@@ -45,10 +45,8 @@ function ProfileSection(props) {
     // pretend to fetch
 
     const cb = (json) => {
-      // fetchGetImage(`http://localhost:4000/image/${json.profilePicture}`, setProfilePicture);
-      // fetchGetImage(`http://localhost:4000/image/${json.wishlist.coverPicUrl}`, setCoverImage);
-      setCoverImage(`http://localhost:4000/images/${json.wishlist.coverPicUrl}`);
-      setProfilePicture(`http://localhost:4000/images/${json.profilePicture}`);
+      setCoverImage(`${json.wishlist.coverPicUrl}`);
+      setProfilePicture(`${json.profilePicture}`);
       setWishlistName(json.wishlist.wishlistName);
       setHandle(json.handle);
       setWishlistMessage(json.wishlist.wishlistMessage);
