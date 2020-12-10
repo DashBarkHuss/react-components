@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Search from './Search.js';
-import ProductInputs from './ProductInputs.js';
-import ChooseImage from './ChooseImage';
-import Button from '@material-ui/core/Button';
 import filterOutSmallImages from './filterImages';
 import WishForm from './WishForm/WishForm';
-// import Search from './Search.js';
 import './AddWish.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
@@ -36,7 +32,7 @@ function AddWish(props) {
   });
   const [filteredImages, setFilteredImages] = useState([]);
   const [retrieved, setRetrieved] = useState(null);
-
+  const [name, setName] = useState('');
   function filterAndSetImages(uniqueImages) {
     filterOutSmallImages(uniqueImages, 100).then((images) => {
       setFilteredImages(images);
@@ -58,11 +54,14 @@ function AddWish(props) {
   return (
     <ThemeProvider theme={theme}>
       <h2>Add A Wish</h2>
+
       <Container className={classes.Container}>
         <Search submit={(e) => handleScrapeProduct(e)} />
         <WishForm
           disabled={!retrieved}
-          // info={info}
+          info={productInfo}
+          name={name}
+          images={filteredImages}
           onClose={props.onClose}
         />
       </Container>

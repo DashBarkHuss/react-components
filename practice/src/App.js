@@ -8,6 +8,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import StyledDialog from './components/common/StyledDialog/StyledDialog';
 import WishForm from './components/AddWish/WishForm/WishForm';
 import UpdateProfileForm from './components/ProfileSection/UpdateProfileInfo/UpdateProfileForm/UpdateProfileForm';
+import { TextField } from '@material-ui/core';
+import ProductInputs from './components/AddWish/ProductInputs';
+import { set } from 'mongoose';
 
 const currentUser = () => {
   return fetch('http://localhost:4000/users/current').then((res) => {
@@ -18,6 +21,7 @@ const currentUser = () => {
 export default function App() {
   const [user, setUser] = useState();
   const [open, setOpen] = useState(true);
+  const [name, setName] = useState('');
 
   useEffect(() => {
     currentUser().then((user) => {
@@ -25,7 +29,7 @@ export default function App() {
     });
   }, []);
   const close = () => {
-    setOpen = false;
+    setOpen(false);
   };
   return (
     <Router>
@@ -34,7 +38,7 @@ export default function App() {
           <UserContext.Provider value={user}>
             {/* <WishForm></WishForm> */}
             {/* <UpdateProfileForm handle="sassy" wishlistName="Sassy's Gifts" /> */}
-            <StyledDialog open={true}>
+            <StyledDialog onClose={close} open={open}>
               <AddWish onClose={close}></AddWish>
             </StyledDialog>
           </UserContext.Provider>

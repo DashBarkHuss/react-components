@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@material-ui/core/Input';
 import { Button, FormGroup, TextField, Typography } from '@material-ui/core';
@@ -9,10 +9,8 @@ import ProductInputs from '../ProductInputs';
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      // textAlign: 'center',
       display: 'grid',
       gap: '1em',
-      //   alignItems: 'center',
     },
     button: {
       fontWeight: 900,
@@ -29,8 +27,23 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+/**
+ * Renders a <WishForm /> component
+ * @param  props
+ * @param  props.info
+ * @param  props.onClose
+ * @param  props.disabled
+ * @param  props.images
+ **/
 export default function WishForm(props) {
   const classes = useStyles();
+  const [price, setPrice] = useState('');
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    setName(props.info && props.info.title);
+    setPrice(props.info && props.info.price);
+  }, [props.info]);
 
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
@@ -43,30 +56,27 @@ export default function WishForm(props) {
       className={classes.root}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ChooseImage
-      //   displayImages={filteredImages}
-      />
+      <ChooseImage images={props.images} />
       <Typography>Set Info</Typography>
       <div style={{ display: 'flex', gap: '1.6em' }}>
         <TextField
           style={{ flex: '3 1' }}
           variant="outlined"
-          // value={name}
+          value={name}
           label="Product Name"
-          // onChange={(e) => {
-          //   setName(e.target.value);
-          // }}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
         />
 
         <TextField
           style={{ flex: '1 1' }}
           variant="outlined"
-          // value={'$' + (price || '')}
-          value={'$'}
+          value={'$' + (price || '')}
           label="Price"
-          // onChange={(e) => {
-          //   setPrice(e.target.value.slice(1));
-          // }}
+          onChange={(e) => {
+            setPrice(e.target.value.slice(1));
+          }}
         />
       </div>
       <Button

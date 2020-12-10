@@ -7,19 +7,15 @@ import { Button, Typography } from '@material-ui/core';
 
 function ChooseImage(props) {
   let [displayImage, setDisplayImage] = useState(null);
-  const [loadedClassName, setLoadedClassName] = useState('not_loaded');
 
   useEffect(() => {
     setDisplayImage(0);
-    if (props.displayImages && props.displayImages.length > 0) setLoadedClassName('loaded');
   }, [props]);
 
   function move(num) {
     let newDisplayImage = displayImage + num;
-    if (newDisplayImage > props.displayImages.length - 1 || newDisplayImage < 0) {
-      newDisplayImage = Math.abs(
-        newDisplayImage + num * -props.displayImages.length - (num == 1 ? 1 : 0)
-      );
+    if (newDisplayImage > props.images.length - 1 || newDisplayImage < 0) {
+      newDisplayImage = Math.abs(newDisplayImage + num * -props.images.length - (num == 1 ? 1 : 0));
     }
     setDisplayImage(newDisplayImage);
   }
@@ -32,14 +28,13 @@ function ChooseImage(props) {
         style={{
           position: 'relative',
           width: '100%',
-          background: `url('https://marvel-b1-cdn.bc0a.com/f00000000114841/www.florsheim.com/shop/resources/images/index/FW20_Refresh3_CasualCrossover.jpg')`,
+          backgroundImage: `url(${props.images && props.images[displayImage]})`,
           backgroundSize: 'cover',
-          backgroundPrositionY: 'center',
+          backgroundPositionY: 'center',
           backgroundPositionX: 'center',
           border: '1px solid grey',
         }}
       >
-        {/* <img src={props.displayImages ? props.displayImages[displayImage] : null} /> */}
         <div
           style={{
             position: 'absolute',
