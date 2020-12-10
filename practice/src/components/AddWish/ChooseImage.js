@@ -5,6 +5,11 @@ import IconButton from '@material-ui/core/IconButton';
 import './ProductImages.css';
 import { Button, Typography } from '@material-ui/core';
 
+/**
+ * Renders a <ChooseImage /> component
+ * @param  props
+ * @param  props.images
+ **/
 function ChooseImage(props) {
   let [displayImage, setDisplayImage] = useState(null);
 
@@ -14,8 +19,11 @@ function ChooseImage(props) {
 
   function move(num) {
     let newDisplayImage = displayImage + num;
-    if (newDisplayImage > props.images.length - 1 || newDisplayImage < 0) {
-      newDisplayImage = Math.abs(newDisplayImage + num * -props.images.length - (num == 1 ? 1 : 0));
+    if (newDisplayImage > props.images.length - 1 && num > 0) {
+      newDisplayImage = 0;
+    }
+    if (newDisplayImage < 0 && num < 0) {
+      newDisplayImage = props.images.length - 1;
     }
     setDisplayImage(newDisplayImage);
   }

@@ -32,6 +32,7 @@ const dialogStyles = makeStyles((theme) => {
         overflow: 'scroll',
       },
       '& .MuiDialog-paper': {
+        maxHeight: '80%',
         margin: 'auto',
         borderRadius: '6px',
         padding: theme.spacing(5, 1),
@@ -40,6 +41,7 @@ const dialogStyles = makeStyles((theme) => {
       [theme.breakpoints.down('450')]: {
         '& .MuiDialog-paper': {
           width: '100%',
+          maxHeight: 'none',
           height: '100%',
           margin: 'auto',
           padding: '0px 0 0 0',

@@ -11,6 +11,7 @@ import UpdateProfileForm from './components/ProfileSection/UpdateProfileInfo/Upd
 import { TextField } from '@material-ui/core';
 import ProductInputs from './components/AddWish/ProductInputs';
 import { set } from 'mongoose';
+import ChooseImage from './components/AddWish/ChooseImage';
 
 const currentUser = () => {
   return fetch('http://localhost:4000/users/current').then((res) => {
@@ -39,7 +40,13 @@ export default function App() {
             {/* <WishForm></WishForm> */}
             {/* <UpdateProfileForm handle="sassy" wishlistName="Sassy's Gifts" /> */}
             <StyledDialog onClose={close} open={open}>
-              <AddWish onClose={close}></AddWish>
+              <ChooseImage
+                images={[
+                  'https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28680969_600.jpg',
+                  'https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28684661_1000.jpg',
+                ]}
+              ></ChooseImage>
+              {/* <AddWish onClose={close}></AddWish> */}
             </StyledDialog>
           </UserContext.Provider>
         </div>

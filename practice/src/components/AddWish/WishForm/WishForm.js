@@ -99,7 +99,7 @@ export default function WishForm(props) {
       </FormControl>
 
       <Button
-        disableElevation="true"
+        disableElevation={true}
         className={classes.button}
         variant="contained"
         color="primary"
