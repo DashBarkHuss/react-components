@@ -40,13 +40,13 @@ export default function App() {
             {/* <WishForm></WishForm> */}
             {/* <UpdateProfileForm handle="sassy" wishlistName="Sassy's Gifts" /> */}
             <StyledDialog onClose={close} open={open}>
-              <ChooseImage
+              {/* <ChooseImage
                 images={[
                   'https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28680969_600.jpg',
                   'https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28684661_1000.jpg',
                 ]}
-              ></ChooseImage>
-              {/* <AddWish onClose={close}></AddWish> */}
+              ></ChooseImage> */}
+              <AddWish onClose={close}></AddWish>
             </StyledDialog>
           </UserContext.Provider>
         </div>

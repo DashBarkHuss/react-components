@@ -4,6 +4,9 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import IconButton from '@material-ui/core/IconButton';
 import './ProductImages.css';
 import { Button, Typography } from '@material-ui/core';
+import EasyCrop from '../common/ReactEasyCrop/EasyCrop';
+import Cropper from 'react-easy-crop';
+import { useTheme } from '@material-ui/core/styles';
 
 /**
  * Renders a <ChooseImage /> component
@@ -11,7 +14,8 @@ import { Button, Typography } from '@material-ui/core';
  * @param  props.images
  **/
 function ChooseImage(props) {
-  let [displayImage, setDisplayImage] = useState(null);
+  const [displayImage, setDisplayImage] = useState(null);
+  const theme = useTheme();
 
   useEffect(() => {
     setDisplayImage(0);
@@ -30,8 +34,27 @@ function ChooseImage(props) {
 
   return (
     <div style={{ display: 'inherit', gap: 'inherit' }}>
-      <Typography>Choose Image</Typography>
-      <div
+      <Typography>Choose & Position Image</Typography>
+      <div style={{ position: 'relative' }}>
+        <EasyCrop slider={false} cropShape="rect" imgSrc={props.images[displayImage]}></EasyCrop>
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            background: theme.palette.primary.main + '80',
+          }}
+        >
+          <IconButton onClick={() => move(-1)}>
+            <NavigateBeforeIcon />
+          </IconButton>
+          <IconButton onClick={() => move(1)}>
+            <NavigateNextIcon />
+          </IconButton>
+        </div>
+      </div>
+      {/* <div
         className="square"
         style={{
           position: 'relative',
@@ -60,7 +83,7 @@ function ChooseImage(props) {
             <NavigateNextIcon />
           </IconButton>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
