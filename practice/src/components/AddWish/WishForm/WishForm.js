@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@material-ui/core/Input';
-import { Button, FormGroup, TextField, Typography } from '@material-ui/core';
+import {
+  Button,
+  FormControl,
+  FormGroup,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ChooseImage from '../ChooseImage';
 import ProductInputs from '../ProductInputs';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -60,7 +70,7 @@ export default function WishForm(props) {
       <Typography>Set Info</Typography>
       <div style={{ display: 'flex', gap: '1.6em' }}>
         <TextField
-          style={{ flex: '3 1' }}
+          style={{ flex: '2 1' }}
           variant="outlined"
           value={name}
           label="Product Name"
@@ -69,15 +79,30 @@ export default function WishForm(props) {
           }}
         />
 
-        <TextField
-          style={{ flex: '1 1' }}
-          variant="outlined"
-          value={'$' + (price || '')}
-          label="Price"
-          onChange={(e) => {
-            setPrice(e.target.value.slice(1));
-          }}
-        />
+        <FormControl style={{ flex: '1 1' }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            value={price || ''}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            labelWidth={60}
+          />
+        </FormControl>
+        <Tooltip title="Don't forget to add shipping">
+          <TextField
+            style={{ flex: '1 1' }}
+            variant="outlined"
+            value={'$' + (price || '')}
+            label="Price"
+            onChange={(e) => {
+              setPrice(e.target.value.slice(1));
+            }}
+            helperText="Shipping"
+          />
+        </Tooltip>
       </div>
       <Button
         disableElevation="true"
