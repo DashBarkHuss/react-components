@@ -5,6 +5,7 @@ import {
   Button,
   FormControl,
   FormGroup,
+  IconButton,
   InputLabel,
   OutlinedInput,
   TextField,
@@ -15,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ChooseImage from '../ChooseImage';
 import ProductInputs from '../ProductInputs';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -67,43 +69,35 @@ export default function WishForm(props) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <ChooseImage images={props.images} />
-      <Typography>Set Info</Typography>
-      <div style={{ display: 'flex', gap: '1.6em' }}>
-        <TextField
-          style={{ flex: '2 1' }}
-          variant="outlined"
-          value={name}
-          label="Product Name"
+      <Typography>Set Wish Info</Typography>
+      <TextField
+        style={{ flex: '3 1' }}
+        variant="outlined"
+        value={name}
+        label="Product Name"
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+      <FormControl variant="outlined">
+        <InputLabel htmlFor="price">Price</InputLabel>
+        <OutlinedInput
+          id="price"
+          value={'$' + (price || '')}
           onChange={(e) => {
-            setName(e.target.value);
+            setPrice(e.target.value.slice(1));
           }}
+          endAdornment={
+            <InputAdornment position="end">
+              <Tooltip title="The amount you'll receive to purchase your wish. Don't forget to add some money if you'd like to account for shipping & tax.">
+                <HelpIcon aria-label="pricing information" />
+              </Tooltip>
+            </InputAdornment>
+          }
+          labelWidth={38}
         />
+      </FormControl>
 
-        <FormControl style={{ flex: '1 1' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            value={price || ''}
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            labelWidth={60}
-          />
-        </FormControl>
-        <Tooltip title="Don't forget to add shipping">
-          <TextField
-            style={{ flex: '1 1' }}
-            variant="outlined"
-            value={'$' + (price || '')}
-            label="Price"
-            onChange={(e) => {
-              setPrice(e.target.value.slice(1));
-            }}
-            helperText="Shipping"
-          />
-        </Tooltip>
-      </div>
       <Button
         disableElevation="true"
         className={classes.button}
