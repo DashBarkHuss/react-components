@@ -74,7 +74,7 @@ export default function StyledDialog(props) {
         className={dialogClasses.root}
       >
         <Container className={containerClasses.root}>
-          <MuiDialogTitle styles={{ padding: 0 }}>
+          <MuiDialogTitle>
             <IconButton
               aria-label="close"
               className={buttonClasses.closeButton}

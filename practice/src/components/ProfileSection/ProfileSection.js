@@ -9,7 +9,7 @@ import UpdateProfileInfo from './UpdateProfileInfo/UpdateProfileInfo';
 //change these to match your backend routes
 import { UserContext } from '../../contexts/UserContext';
 import { useParams } from 'react-router-dom';
-const postImageRoute = 'http://localhost:4000/image';
+const postImageRoute = 'http://localhost:4001/image';
 
 /**
  * Renders a <ProfileSection /> component
@@ -34,7 +34,7 @@ function ProfileSection(props) {
       setWishlistMessage(json.wishlist.wishlistMessage);
       setIsAuth(currentUser ? currentUser.aliases.includes[json._id] : false);
     };
-    fetchGet(`http://localhost:4000/aliases?handle=${aliasPath}`, cb);
+    fetchGet(`http://localhost:4001/aliases?handle=${aliasPath}`, cb);
   }, []);
 
   // fetch post image
@@ -112,7 +112,7 @@ function ProfileSection(props) {
     fetchPostImage(image, 'image', postImageRoute, setProfilePicture);
   };
   const handleCheckHandleAvailability = async (handle) => {
-    const available = await fetch(`http://localhost:4000/users?handle=${handle}`)
+    const available = await fetch(`http://localhost:4001/users?handle=${handle}`)
       .then((res) => {
         return res.text();
       })
@@ -126,7 +126,7 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPostJson({ handle }, 'http://localhost:4000/alias', () => {
+    fetchPostJson({ handle }, 'http://localhost:4001/alias', () => {
       setHandle(handle);
     });
   };
@@ -139,13 +139,13 @@ function ProfileSection(props) {
     fetchPostImage(image, 'image', postImageRoute, setCoverImage);
   };
   const handleUpdateWishlistMessage = (wishlistMessage) => {
-    fetchPostJson({ wishlistMessage }, 'http://localhost:4000/wishlist', () => {
+    fetchPostJson({ wishlistMessage }, 'http://localhost:4001/wishlist', () => {
       setWishlistMessage(wishlistMessage);
     });
   };
 
   const handleUpdateWishlistName = (wishlistName) => {
-    fetchPostJson({ wishlistName }, 'http://localhost:4000/wishlist', () => {
+    fetchPostJson({ wishlistName }, 'http://localhost:4001/wishlist', () => {
       setWishlistName(wishlistName);
     });
   };

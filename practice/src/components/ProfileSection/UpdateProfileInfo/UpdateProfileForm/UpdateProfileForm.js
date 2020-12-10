@@ -25,7 +25,11 @@ const useStyles = makeStyles((theme) => {
  * Renders a <UpdateProfileForm /> component
  * @param  props
  * @param  props.handleCheckHandleAvailability
- * @param  props.handleCheckHandleAvailability
+ * @param  props.handleUpdateWishlistName
+ * @param  props.handle
+ * @param  props.wishlistName
+ * @param  props.onClose
+ *
  **/
 export default function UpdateProfileForm(props) {
   const { register, handleSubmit, errors, clearErrors } = useForm({
