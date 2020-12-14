@@ -12,6 +12,8 @@ import { TextField } from '@material-ui/core';
 import ProductInputs from './components/AddWish/ProductInputs';
 import { set } from 'mongoose';
 import ChooseImage from './components/AddWish/ChooseImage';
+import Crop from './components/common/Crop/Crop';
+import EasyCrop from './components/common/ReactEasyCrop/EasyCrop';
 
 const currentUser = () => {
   return fetch('http://localhost:4000/users/current').then((res) => {
@@ -37,16 +39,27 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <div className="App">
           <UserContext.Provider value={user}>
-            {/* <WishForm></WishForm> */}
-            {/* <UpdateProfileForm handle="sassy" wishlistName="Sassy's Gifts" /> */}
             <StyledDialog onClose={close} open={open}>
-              {/* <ChooseImage
-                images={[
-                  'https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28680969_600.jpg',
-                  'https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28684661_1000.jpg',
-                ]}
-              ></ChooseImage> */}
-              <AddWish onClose={close}></AddWish>
+              {/* <Crop
+                cropShape="rect"
+                oncroppedImageCreated={console.log}
+                finalImageDimensions={{ width: 300, height: 300 }}
+                imgSrc="https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28680969_600.jpg"
+              ></Crop> */}
+              {/* <EasyCrop
+                aspect="1"
+                cropShape="rect"
+                slider={false}
+                onCropComplete={(c) => {
+                  console.log(c.croppedAreaPixels);
+                }}
+                imgSrc="https://cdn-images.farfetch-contents.com/15/40/82/30/15408230_28680969_600.jpg"
+              ></EasyCrop> */}
+              <AddWish
+                alias="5fcfc70ddd6d5626163bd201"
+                wishlist="5fcfc70ddd6d5626163bd202"
+                onClose={close}
+              ></AddWish>
             </StyledDialog>
           </UserContext.Provider>
         </div>

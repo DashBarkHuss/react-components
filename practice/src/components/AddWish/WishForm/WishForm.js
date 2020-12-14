@@ -51,6 +51,7 @@ export default function WishForm(props) {
   const classes = useStyles();
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
+  const [crop, setCrop] = useState('');
 
   useEffect(() => {
     setName(props.info && props.info.title);
@@ -60,7 +61,9 @@ export default function WishForm(props) {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     //send data to backend post wish item
-    props.onClose();
+    const imageCrop = { crop };
+    data.imageCrop = imageCrop;
+    props.onSubmit(data);
   };
   return (
     <form
@@ -68,9 +71,16 @@ export default function WishForm(props) {
       className={classes.root}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ChooseImage images={props.images} />
+      <ChooseImage
+        onCropComplete={(c) => {
+          setCrop(c.croppedAreaPixels);
+        }}
+        images={props.images}
+      />
       <Typography>Set Wish Info</Typography>
       <TextField
+        inputRef={register()}
+        name="name"
         style={{ flex: '3 1' }}
         variant="outlined"
         value={name}
@@ -82,6 +92,8 @@ export default function WishForm(props) {
       <FormControl variant="outlined">
         <InputLabel htmlFor="price">Price</InputLabel>
         <OutlinedInput
+          inputRef={register()}
+          name="price"
           id="price"
           value={'$' + (price || '')}
           onChange={(e) => {
@@ -104,6 +116,7 @@ export default function WishForm(props) {
         variant="contained"
         color="primary"
         size="large"
+        type="submit"
       >
         + Add Wish
       </Button>

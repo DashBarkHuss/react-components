@@ -8,6 +8,25 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+// fetch post json
+const fetchPostJson = async (data, route, callback) => {
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  await fetch(route, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers,
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      console.log('server response: ', response);
+      if (callback) callback();
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(err);
+    });
+};
 const useStyles = makeStyles((theme) => {
   return {
     Container: {
@@ -31,8 +50,8 @@ function AddWish(props) {
     imageSrcs: [],
   });
   const [filteredImages, setFilteredImages] = useState([]);
+  const [url, setUrl] = useState(null);
   const [retrieved, setRetrieved] = useState(null);
-  const [name, setName] = useState('');
   function filterAndSetImages(uniqueImages) {
     filterOutSmallImages(uniqueImages, 100).then((images) => {
       setFilteredImages(images);
@@ -40,16 +59,25 @@ function AddWish(props) {
   }
 
   function handleScrapeProduct(url) {
+    setUrl(url);
     axios.post('http://localhost:4000/wishes/productInfo', { url: url }).then((res) => {
       const info = res.data;
-      setProductInfo(info);
       const images = info.imageSrcs;
+      delete info.imageSrcs;
+      setProductInfo(info);
       if (res.data) setRetrieved('true');
 
       const uniqueImages = [...new Set(images)];
       filterAndSetImages(uniqueImages);
     });
   }
+  const postWish = (data) => {
+    const wishInfo = data;
+    wishInfo.url = url;
+    wishInfo.wishlist = props.wishlist;
+    wishInfo.alias = props.alias;
+    fetchPostJson(wishInfo, 'http://localhost:4000/wishlistItems');
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,11 +86,11 @@ function AddWish(props) {
       <Container className={classes.Container}>
         <Search submit={(e) => handleScrapeProduct(e)} />
         <WishForm
-          disabled={!retrieved}
+          // disabled={!retrieved}
+          disabled={false}
           info={productInfo}
-          name={name}
           images={filteredImages}
-          onClose={props.onClose}
+          onSubmit={postWish}
         />
       </Container>
     </ThemeProvider>

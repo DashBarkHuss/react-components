@@ -12,6 +12,7 @@ import { useTheme } from '@material-ui/core/styles';
  * Renders a <ChooseImage /> component
  * @param  props
  * @param  props.images
+ * @param  props.onCropComplete
  **/
 function ChooseImage(props) {
   const [displayImage, setDisplayImage] = useState(null);
@@ -36,7 +37,14 @@ function ChooseImage(props) {
     <div style={{ display: 'inherit', gap: 'inherit' }}>
       <Typography>Choose & Position Image</Typography>
       <div style={{ position: 'relative' }}>
-        <EasyCrop slider={false} cropShape="rect" imgSrc={props.images[displayImage]}></EasyCrop>
+        {/* <EasyCrop slider={false} cropShape="rect" imgSrc={props.images[displayImage]}></EasyCrop> */}
+        <EasyCrop
+          aspect="1"
+          cropShape="rect"
+          slider={false}
+          onCropComplete={props.onCropComplete}
+          imgSrc={props.images[displayImage]}
+        ></EasyCrop>
         <div
           style={{
             position: 'relative',
@@ -54,36 +62,6 @@ function ChooseImage(props) {
           </IconButton>
         </div>
       </div>
-      {/* <div
-        className="square"
-        style={{
-          position: 'relative',
-          width: '100%',
-          backgroundImage: `url(${props.images && props.images[displayImage]})`,
-          backgroundSize: 'cover',
-          backgroundPositionY: 'center',
-          backgroundPositionX: 'center',
-          border: '1px solid grey',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            display: 'flex',
-            justifyContent: 'space-between',
-            bottom: '2%',
-            width: '100%',
-            background: '#ffffff80',
-          }}
-        >
-          <IconButton onClick={() => move(-1)}>
-            <NavigateBeforeIcon />
-          </IconButton>
-          <IconButton onClick={() => move(1)}>
-            <NavigateNextIcon />
-          </IconButton>
-        </div>
-      </div> */}
     </div>
   );
 }

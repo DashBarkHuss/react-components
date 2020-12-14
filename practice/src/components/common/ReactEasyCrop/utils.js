@@ -133,3 +133,19 @@ export async function blobToImage64(blob) {
   });
   return image64file;
 }
+
+export async function toDataURL(url) {
+  return new Promise((resolve) => {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  });
+}
